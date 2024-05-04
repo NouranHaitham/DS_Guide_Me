@@ -16,6 +16,7 @@ using namespace std;
 struct Transportation
 {
 	// data members
+	
 	string vechile="";
 	double price=0.0;
 	Transportation(string m, int p) : vechile(m), price(p) {}
@@ -41,6 +42,8 @@ public:
 	// methods
 
 	// WRITE YOUR METHODS HERE, THEN IMPLEMENT THEM IN .CPP FILE 
+
+	void updateTransportation(const string& source, const string& destination, const string& vehicle, double newPrice);
 
 	//bool isComplete();
 	void addEdge(string src, string dest, string method, int price);
