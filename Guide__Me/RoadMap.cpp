@@ -10,51 +10,7 @@ Cairo - BeniSuef Microbus 20 Bus 15
 Asyut - Cairo Train 250 Bus 450 
     */
 
-	fstream file;
-	file.open("Input.txt", ios::in);
-
-	int num; file >> num;
-	file.ignore();
-
-	numOfLines = num;
-
-	while (num--)
-	{
-		string line,source,destination,strPrice;
-		Tranporation trans;
-
-		getline(file, line);       // read the whole line
-		istringstream iss(line);  
-
-		//cout << line << " " << num << endl;
-
-		getline(iss, source, ' ');  // read source
-
-		getline(iss, line, ' ');  // to pass '-'
-
-
-		getline(iss, destination, ' '); // read destination
-
-
-		// now we read the list of transportations && push 
-
-		while (getline(iss, trans.vechile, ' ')) {
-			
-			getline(iss, strPrice, ' ');
-			trans.price = stod(strPrice);
-
-			// finally we add it.
-
-
-			trans.destination = destination;
-			map[source].push_back(trans);
-
-			trans.destination = source;
-			map[destination].push_back(trans);
-
-		}
-
-	}
+	
 
 	/*
 	* 

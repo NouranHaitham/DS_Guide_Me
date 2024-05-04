@@ -13,7 +13,7 @@ using namespace std;
 struct Tranporation 
 {
 	// data members
-	string destination="";
+	//string destination="";
 	string vechile="";
 	double price=0.0;
 };
@@ -26,7 +26,10 @@ private:
 	// datamembers
 	
 	//      key=> name of source & value=> vector (transporation(source,destination,cost))  
-	unordered_map<string, vector <Tranporation> > map;
+	//unordered_map<string, vector <Tranporation> > map;
+	unordered_map<string, vector <pair<string, vector<Tranporation>>>> _map;
+	vector<Tranporation>vehicle;
+
 
 public:
 	// constructors
