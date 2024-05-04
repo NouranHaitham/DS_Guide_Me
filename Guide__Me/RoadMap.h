@@ -10,7 +10,7 @@
 #include<fstream>
 using namespace std;
 
-struct Tranporation 
+struct Transportation 
 {
 	// data members
 	string vechile="";
@@ -25,8 +25,8 @@ private:
 	// datamembers
 	
 	//      key=> name of source & value=> vector (transporation(source,destination,cost))  
-	unordered_map<string, vector <pair<string, vector<Tranporation>>>> _map;
-	vector<Tranporation>vehicle;
+	unordered_map<string, vector <pair<string, vector<Transportation>>>> _map;
+	vector<Transportation>vehicle;
 
 
 public:

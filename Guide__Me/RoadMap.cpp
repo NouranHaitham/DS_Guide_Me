@@ -28,9 +28,10 @@ Asyut - Cairo Train 250 Bus 450
 		cout << endl;
 
 	}
+		file.close();
   */ 
 
-	file.close();
+
 }
 
 
