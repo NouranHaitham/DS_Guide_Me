@@ -10,11 +10,11 @@
 #include<fstream>
 using namespace std;
 
-struct Transportation 
+struct Transportation
 {
 	// data members
-	string vechile="";
-	double price=0.0;
+	string vechile = "";
+	double price = 0.0;
 };
 
 
@@ -23,7 +23,7 @@ class RoadMap
 
 private:
 	// datamembers
-	
+
 	//      key=> name of source & value=> vector (transporation(source,destination,cost))  
 	unordered_map<string, vector <pair<string, vector<Transportation>>>> _map;
 	vector<Transportation>vehicle;
@@ -31,7 +31,7 @@ private:
 
 public:
 	// constructors
-		
+
 	RoadMap();  // read map
 	int numOfLines; // FOR FILESTREAM
 
