@@ -16,9 +16,9 @@ using namespace std;
 struct Transportation
 {
 	// data members
-	string vehicle="";
+	string vechile="";
 	double price=0.0;
-	Transportation(string m, int p) : vehicle(m), price(p) {}
+	Transportation(string m, int p) : vechile(m), price(p) {}
 };
 
 

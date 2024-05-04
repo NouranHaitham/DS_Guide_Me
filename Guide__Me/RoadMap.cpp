@@ -4,12 +4,12 @@ void RoadMap::addEdge(string src, string dest, string method, int price) {
     // undirected graph
     vector<Transportation> transVector;
     transVector.push_back(Transportation(method, price));
-    adjList[src].push_back(make_pair(dest, transVector));
-    adjList[dest].push_back(make_pair(src, transVector));
+    _map[src].push_back(make_pair(dest, transVector));
+    _map[dest].push_back(make_pair(src, transVector));
 }
 
 void RoadMap::addTransportation(string src, string dest, string method, int price) {
-    for (auto& pair : adjList[src]) { // checks if the edge already exists
+    for (auto& pair : _map[src]) { // checks if the edge already exists
         if (ignoreCaseInsensitive(pair.first, dest)) { // checks if the dest entered by the user exists
             for (auto& transPair : pair.second) {
                 if (ignoreCaseInsensitive(transPair.vehicle, method)) { // checks if the method exits
@@ -26,12 +26,12 @@ void RoadMap::addTransportation(string src, string dest, string method, int pric
 void RoadMap::displayGraph() {
     unordered_map<string, vector<pair<string, vector<Transportation>>>>::iterator it;
     cout << "Main map: \n";
-    for (it = adjList.begin(); it != adjList.end(); ++it) {
+    for (it = _map.begin(); it != _map.end(); ++it) {
         cout << "City: " << it->first << " -> \n";
         for (auto& pair : it->second) {
             cout << pair.first << " [";
             for (auto& trans : pair.second) {
-                cout << "(" << trans.vehicle << ", " << trans.price << ")";
+                cout << "(" << trans.vechile << ", " << trans.price << ")";
             }
             cout << "] ";
         }
@@ -76,6 +76,7 @@ void RoadMap::Add() {
         cin.ignore(); // prevents a new line encounter
 
     } while (c == "y" || c == "Y");
+}
 
 RoadMap::RoadMap()
 {
