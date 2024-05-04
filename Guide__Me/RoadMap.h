@@ -51,6 +51,8 @@ public:
 	bool ignoreCaseInsensitive(string str1, string str2);
 	string toLower(string s);
 
+	void deleteTransportation(string source, string destination);
+
 	// destructor
 
 	//~RoadMap();

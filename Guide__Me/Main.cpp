@@ -6,7 +6,6 @@ int main()
 {
 	///////////////
 	RoadMap* road = new RoadMap();
-    //road->RoadMap();
-
+  road->~RoadMap();
 	return 0;
 }
