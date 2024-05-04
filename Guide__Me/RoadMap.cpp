@@ -1,53 +1,5 @@
 #include "RoadMap.h"
 
-//RoadMap::RoadMap()
-//{
-//	/*
-//	 4
-//Cairo - Giza Metro 30 Bus 60 Uber 230
-//Dahab - Giza Bus 500 Microbus 345
-//Cairo - BeniSuef Microbus 20 Bus 15
-//Asyut - Cairo Train 250 Bus 450 
-//    */
-//
-//	/*
-//	* 
-//	* For printing the map if needed
-//	*   
-//	cout << map.size() << endl;
-//   
-//	for (unordered_map<string, vector <Tranporation>>::iterator start = map.begin(); start != map.end(); start++)
-//	{
-//		cout << start->first << endl;
-//
-//		for (int i = 0; i < start->second.size(); i++)
-//		{
-//			cout << start->second[i].destination << " " << start->second[i].vechile << " "
-//				<< start->second[i].price << "// ";
-//		}
-//		cout << endl;
-//
-//	}
-//  */ 
-//}
-
-RoadMap::RoadMap(){
-// original map
-addEdge("Asyut", "Cairo", "Trian", 250);
-addEdge("Asyut", "Cairo", "Bus", 450);
-addEdge("Cairo", "BeniSuef", "Microbus", 20);
-addEdge("Cairo", "BeniSuef", "Bus", 15);
-addEdge("BeniSuef", "Dahab", "Microbus", 200);
-addEdge("BeniSuef", "Dahab", "Bus", 315);
-addEdge("Dahab", "Giza", "Bus", 500);
-addEdge("Dahab", "Giza", "Microbus", 345);
-addEdge("Giza", "Cairo", "Metro", 30);
-addEdge("Giza", "Cairo", "Bus", 60);
-addEdge("Giza", "Cairo", "Uber", 230);
-
-}
-
-
 void RoadMap::addEdge(string src, string dest, string method, int price) {
     // undirected graph
     vector<Transportation> transVector;
@@ -124,6 +76,39 @@ void RoadMap::Add() {
         cin.ignore(); // prevents a new line encounter
 
     } while (c == "y" || c == "Y");
+
+RoadMap::RoadMap()
+{
+	/*
+	 4
+Cairo - Giza Metro 30 Bus 60 Uber 230
+Dahab - Giza Bus 500 Microbus 345
+Cairo - BeniSuef Microbus 20 Bus 15
+Asyut - Cairo Train 250 Bus 450 
+    */
+
+	/*
+	* 
+	* For printing the map if needed
+	*   
+	cout << map.size() << endl;
+   
+	for (unordered_map<string, vector <Tranporation>>::iterator start = map.begin(); start != map.end(); start++)
+	{
+		cout << start->first << endl;
+
+		for (int i = 0; i < start->second.size(); i++)
+		{
+			cout << start->second[i].destination << " " << start->second[i].vechile << " "
+				<< start->second[i].price << "// ";
+		}
+		cout << endl;
+
+	}
+		file.close();
+  */ 
+
+
 }
 
 bool RoadMap::cityExists(string s) {

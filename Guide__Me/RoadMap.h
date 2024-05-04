@@ -12,6 +12,7 @@
 #include<fstream>
 using namespace std;
 
+
 struct Transportation
 {
 	// data members
@@ -27,9 +28,9 @@ class RoadMap
 private:
 	// datamembers
 	//      key=> name of source & value=> vector (transporation(source,destination,cost))  
-	unordered_map<string, vector<pair<string, vector<Transportation>>>> adjList;
-	vector<Transportation>vehicle;
 
+	unordered_map<string, vector <pair<string, vector<Transportation>>>> _map;
+	vector<Transportation>vehicle;
 
 public:
 	// constructors
