@@ -10,8 +10,6 @@ Cairo - BeniSuef Microbus 20 Bus 15
 Asyut - Cairo Train 250 Bus 450 
     */
 
-	
-
 	/*
 	* 
 	* For printing the map if needed
@@ -38,7 +36,7 @@ Asyut - Cairo Train 250 Bus 450
 
 RoadMap::~RoadMap()
 {
-
+/*
 	fstream file;
 	file.open("Input.txt", ios::out);
 
@@ -83,7 +81,7 @@ RoadMap::~RoadMap()
 	}
 
 	file.close();
-
+*/
 }
 
 
