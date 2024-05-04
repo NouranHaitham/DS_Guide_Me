@@ -42,6 +42,8 @@ public:
 
 	bool isComplete();
 
+	void deleteTransportation(string source, string destination);
+
 	// destructor
 
 	~RoadMap();

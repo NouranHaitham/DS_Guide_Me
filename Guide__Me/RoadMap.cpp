@@ -83,5 +83,68 @@ RoadMap::~RoadMap()
 	file.close();
 */
 }
+void RoadMap::deleteTransportation(string source, string destination)
+{
+    string transport = "";
+    while (transport != "q")
+    {
+        // Display all edges
+        auto sourceCity = _map.find(source);
+        if (sourceCity != _map.end())
+        {
+            for (auto& desCity : sourceCity->second)
+            {
+                if (desCity.first == destination && !desCity.second.empty())
+                {
+                    for (auto trans = desCity.second.begin(); trans != desCity.second.end(); trans++)
+                    {
+                        cout << "Edge from " << source << " to " << destination << " : vechile = " << trans->vechile << " : price = " << trans->price << endl;
+                    }
+                }
+            }
 
+            cout << "Choose one Transportation to Delete or enter 'q' to quit:- " << endl;
+            cin >> transport;
+
+            // Delete the edge from the source node
+            for (auto& desCity : sourceCity->second)
+            {
+                if (desCity.first == destination)
+                {
+                    for (auto trans = desCity.second.begin(); trans <= desCity.second.end(); trans++)
+                    {
+                        if (trans->vechile == transport)
+                        {
+                            desCity.second.erase(trans);
+                        }
+                    }
+                }
+            }
+
+            // Delete the edge from the destination node
+            sourceCity = _map.find(destination);
+            if (sourceCity != _map.end())
+            {
+                for (auto& desCity : sourceCity->second)
+                {
+                    if (desCity.first == source)
+                    {
+                        for (auto trans = desCity.second.begin(); trans <= desCity.second.end(); trans++)
+                        {
+                            if (trans->vechile == transport)
+                            {
+                                desCity.second.erase(trans);
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        else
+        {
+            cout << "There is no city with this name " << endl;
+            break;
+        }
+    }
+}
 
