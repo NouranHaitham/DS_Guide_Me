@@ -20,11 +20,13 @@ public:
 
     void visualizeNodes(RoadMap* map);
     void visualizeEdges(RoadMap* map);
+    void onPushButtonClicked();
 
     Ui::QtWidgetsClassClass ui;
     QGraphicsScene* scene;
     QGraphicsView* view;
     std::unordered_map<std::string, std::pair<int, int>> coordinates;
 private:
+
 
 };

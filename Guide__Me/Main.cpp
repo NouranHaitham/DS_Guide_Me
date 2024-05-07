@@ -1,11 +1,12 @@
 #include "QtWidgetsClass.h"
-#include <QApplication>
 #include "RoadMap.h"
+#include <qboxlayout.h>
 
 int main(int argc, char* argv[])
 {
     QApplication app(argc, argv);
     QtWidgetsClass w;
+
 
     // Create a scene
     w.scene = new QGraphicsScene();
@@ -18,9 +19,19 @@ int main(int argc, char* argv[])
     // Visualize edges
     w.visualizeEdges(map);
 
-    // Create a view to visualize the scene
     w.view = new QGraphicsView(w.scene);
-    w.view->show();
+
+    // Set up the layout
+    QVBoxLayout* layout = new QVBoxLayout;
+    layout->addWidget(w.view);
+    layout->addWidget(w.ui.pushButton); 
+
+    // add layout on central widget
+    QWidget* centralWidget = new QWidget;
+    centralWidget->setLayout(layout);
+    w.setCentralWidget(centralWidget);
+
+    w.show();
 
     return app.exec();
 }

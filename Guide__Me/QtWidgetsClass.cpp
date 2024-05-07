@@ -4,6 +4,12 @@ QtWidgetsClass::QtWidgetsClass(QWidget* parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
+    scene = new QGraphicsScene();
+    // Display content on the screen
+    ui.graphicsView->setScene(scene); 
+
+    // Connect the button's clicked signal to a slot
+    connect(ui.pushButton, &QPushButton::clicked, this, &QtWidgetsClass::onPushButtonClicked);
 }
 
 QtWidgetsClass::~QtWidgetsClass()
@@ -11,6 +17,9 @@ QtWidgetsClass::~QtWidgetsClass()
 
 }
 
+void QtWidgetsClass::onPushButtonClicked() {
+
+}
 void QtWidgetsClass::visualizeNodes(RoadMap* map) {
     int x = 0, y = 500;
     int i = 0;
