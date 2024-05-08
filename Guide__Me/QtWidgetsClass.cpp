@@ -4,21 +4,68 @@ QtWidgetsClass::QtWidgetsClass(QWidget* parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
-    scene = new QGraphicsScene();
     // Display content on the screen
-    ui.graphicsView->setScene(scene); 
+    
 
-    // Connect the button's clicked signal to a slot
-    connect(ui.pushButton, &QPushButton::clicked, this, &QtWidgetsClass::onPushButtonClicked);
 }
 
 QtWidgetsClass::~QtWidgetsClass()
 {
 
 }
+void QtWidgetsClass::GraphRead() {
+
+    RoadMap* map = new RoadMap();
+
+    scene = new QGraphicsScene();
+    ui.graphicsView->setScene(scene);
+
+    // Visualize graph
+    visualizeNodes(map);
+    visualizeEdges(map);
+
+   
+    //go to 2nd page (2nd page name is from the scene builder)
+    ui.stackedWidget->setCurrentWidget(ui.page_2);
+    ui.stackedWidget_2->setCurrentWidget(ui.page_3);
+}
+
+
+
 
 void QtWidgetsClass::onPushButtonClicked() {
 
+}
+
+void QtWidgetsClass::addButton()
+{
+    ui.stackedWidget_2->setCurrentWidget(ui.page_4);
+}
+
+void QtWidgetsClass::updateButton()
+{
+    ui.stackedWidget_2->setCurrentWidget(ui.page_5);
+}
+
+void QtWidgetsClass::deleteButton()
+{
+    ui.stackedWidget_2->setCurrentWidget(ui.page_6);
+}
+
+
+void QtWidgetsClass::traversButton()
+{
+    ui.stackedWidget_2->setCurrentWidget(ui.page_7);
+}
+
+void QtWidgetsClass::returnButton()
+{
+    ui.stackedWidget_2->setCurrentWidget(ui.page_3);
+    ui.stackedWidget->setCurrentWidget(ui.page_2);
+}
+void QtWidgetsClass::allPathsButton()
+{
+    ui.stackedWidget->setCurrentWidget(ui.page_8);
 }
 void QtWidgetsClass::visualizeNodes(RoadMap* map) {
     int x = 0, y = 500;

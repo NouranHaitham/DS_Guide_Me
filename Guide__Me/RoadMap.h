@@ -68,7 +68,7 @@ public:
 	bool ignoreCaseInsensitive(string str1, string str2);
 	string toLower(string s);
 
-	void deleteTransportation(string source, string destination);
+	void deleteTransportation(string source, string destination, string transport);
 
 	void ClearElqueue(queue<pair<string, string>>& path);
 	void ALLAVALIABLEPATHS(string node, double cost);

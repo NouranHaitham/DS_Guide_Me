@@ -18,6 +18,13 @@ public:
     QtWidgetsClass(QWidget* parent = nullptr);
     ~QtWidgetsClass();
 
+    void GraphRead();
+    void addButton();
+    void deleteButton();
+    void updateButton();
+    void traversButton();
+    void returnButton();
+    void allPathsButton();
     void visualizeNodes(RoadMap* map);
     void visualizeEdges(RoadMap* map);
     void onPushButtonClicked();

@@ -279,31 +279,12 @@ void RoadMap::updateTransportation(const string& source, const string& destinati
 }
 
 /////////////////////////////////////////////////
-void RoadMap::deleteTransportation(string source, string destination)
+void RoadMap::deleteTransportation(string source, string destination, string transport)
 {
-    string transport = "";
-    while (true)
-    {
         // Display all edges
         auto sourceCity = map.find(source);
         if (sourceCity != map.end())
         {
-            for (auto& desCity : sourceCity->second)
-            {
-                if (desCity.first == destination && !desCity.second.empty())
-                {
-                    for (auto trans = desCity.second.begin(); trans != desCity.second.end(); trans++)
-                    {
-                        cout << "Edge from " << source << " to " << destination << " : vehicle = " << trans->vehicle << " : price = " << trans->price << endl;
-                    }
-                }
-            }
-
-            cout << "Choose one Transportation to Delete or enter 'q' to quit:- " << endl;
-            cin >> transport;
-
-            if (transport == "q") return;
-
             // Delete the edge from the source node
             for (auto& desCity : sourceCity->second)
             {
@@ -342,12 +323,6 @@ void RoadMap::deleteTransportation(string source, string destination)
                 }
             }
         }
-        else
-        {
-            cout << "There is no city with this name " << endl;
-            break;
-        }
-    }
 }
 ////////////////////////////////////////////////
 bool RoadMap::isComplete()
