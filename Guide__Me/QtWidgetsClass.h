@@ -42,7 +42,7 @@ public slots:
         QString des = ui.textEdit_3->toPlainText();
         QString method = ui.textEdit_2->toPlainText();
         QString price = ui.textEdit_4->toPlainText();
-        map->addTransportation(src.toStdString(),des.toStdString(),method.toStdString(), price.toDouble());
+        map->addTransportation(src.toStdString(), des.toStdString(), method.toStdString(), price.toDouble());
         GraphRead();
         ui.textEdit->clear();
         ui.textEdit_3->clear();
@@ -60,7 +60,7 @@ public slots:
         ui.textEdit_14->clear();
         ui.textEdit_15->clear();
     };
-    
+
     void slotUpdate() {
         QString src = ui.textEdit_9->toPlainText();
         QString des = ui.textEdit_10->toPlainText();
@@ -75,13 +75,13 @@ public slots:
     };
 
     void slotConnect() {
-        
+
         map->isComplete();
 
     };
-    
+
     void slotDFS() {
-        
+
         ui.textBrowser->clear(); // Clear existing contents
 
         QString src = ui.textEdit_16->toPlainText();
@@ -90,21 +90,21 @@ public slots:
 
         ui.textBrowser->append(text); // Add new text
     };
-    
+
     void slotBFS() {
-        
+
         ui.textBrowser->clear(); // Clear existing contents
 
         QString src = ui.textEdit_16->toPlainText();
         QString text = map->bfs(src.toStdString());
-        ui.textEdit_16->clear(); 
-        
+        ui.textEdit_16->clear();
+
         ui.textBrowser->append(text); // Add new text
 
     };
-    
+
     void slotAllPaths() {
-        
+
         ui.textBrowser_2->clear(); // Clear existing contents
 
         QString src = ui.textEdit_17->toPlainText();
@@ -113,13 +113,30 @@ public slots:
 
         QString text = map->outputofpaths(src.toStdString(), des.toStdString(), bud.toDouble());
 
-        ui.textEdit_17->clear(); 
-        ui.textEdit_18->clear(); 
-        ui.textEdit_19->clear(); 
-        
+        ui.textEdit_17->clear();
+        ui.textEdit_18->clear();
+        ui.textEdit_19->clear();
+
         ui.textBrowser_2->append(text); // Add new text
 
     };
+
+    void slotTransDisplay() {
+
+        ui.textBrowser_3->clear();
+        QString src = ui.textEdit_5->toPlainText();
+        QString des = ui.textEdit_6->toPlainText();
+       
+        QString text = map->DisplayEdges(src.toStdString(), des.toStdString());
+
+
+       // ui.textEdit_5->clear();
+       //ui.textEdit_6->clear();
+
+        ui.textBrowser_3->append(text); // Add new text
+
+
+    }
 
 
 };

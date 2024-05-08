@@ -16,8 +16,6 @@ QtWidgetsClass::~QtWidgetsClass()
 }
 void QtWidgetsClass::GraphRead() {
 
-   
-
     scene = new QGraphicsScene();
     ui.graphicsView->setScene(scene);
 
@@ -125,7 +123,7 @@ void QtWidgetsClass::visualizeEdges(RoadMap* map) {
                 pen.setWidth(5); // Set line thickness to 3
                 edge->setPen(pen);
 
-                // Add weight text
+           /*     // Add weight text
                 int spaceX = 0;
                 for (auto trans : transport.second)
                 {
@@ -138,7 +136,10 @@ void QtWidgetsClass::visualizeEdges(RoadMap* map) {
                     weightText->setPos(weightX, weightY);
                     spaceX += trans.vehicle.size()*30;
                 }
+           */
+
             }
+
         }
     }
 }

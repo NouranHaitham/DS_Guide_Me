@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>714</width>
-    <height>493</height>
+    <width>862</width>
+    <height>523</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -19,7 +19,7 @@
      <rect>
       <x>0</x>
       <y>0</y>
-      <width>711</width>
+      <width>861</width>
       <height>421</height>
      </rect>
     </property>
@@ -109,7 +109,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>2</number>
+       <number>0</number>
       </property>
       <widget class="QWidget" name="page_3">
        <widget class="QWidget" name="verticalLayoutWidget">
@@ -214,7 +214,7 @@
          </font>
         </property>
         <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
+         <enum>Qt::LayoutDirection::LeftToRight</enum>
         </property>
         <property name="text">
          <string>←</string>
@@ -248,7 +248,7 @@
           <x>20</x>
           <y>70</y>
           <width>131</width>
-          <height>281</height>
+          <height>428</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_2">
@@ -367,7 +367,7 @@
           <x>20</x>
           <y>80</y>
           <width>131</width>
-          <height>281</height>
+          <height>428</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_4">
@@ -456,7 +456,7 @@
          </font>
         </property>
         <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
+         <enum>Qt::LayoutDirection::LeftToRight</enum>
         </property>
         <property name="text">
          <string>←</string>
@@ -521,7 +521,7 @@
          </font>
         </property>
         <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
+         <enum>Qt::LayoutDirection::LeftToRight</enum>
         </property>
         <property name="text">
          <string>←</string>
@@ -555,7 +555,7 @@
           <x>20</x>
           <y>80</y>
           <width>131</width>
-          <height>211</height>
+          <height>319</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout_5">
@@ -630,7 +630,7 @@
          </font>
         </property>
         <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
+         <enum>Qt::LayoutDirection::LeftToRight</enum>
         </property>
         <property name="text">
          <string>←</string>
@@ -703,7 +703,7 @@
          </font>
         </property>
         <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
+         <enum>Qt::LayoutDirection::LeftToRight</enum>
         </property>
         <property name="text">
          <string>DFS</string>
@@ -728,7 +728,7 @@
          </font>
         </property>
         <property name="layoutDirection">
-         <enum>Qt::LeftToRight</enum>
+         <enum>Qt::LayoutDirection::LeftToRight</enum>
         </property>
         <property name="text">
          <string>BFS</string>
@@ -749,15 +749,109 @@
        </widget>
       </widget>
      </widget>
+     <widget class="QWidget" name="verticalLayoutWidget_6">
+      <property name="geometry">
+       <rect>
+        <x>710</x>
+        <y>10</y>
+        <width>131</width>
+        <height>210</height>
+       </rect>
+      </property>
+      <layout class="QVBoxLayout" name="verticalLayout_3">
+       <property name="spacing">
+        <number>10</number>
+       </property>
+       <item>
+        <widget class="QLabel" name="label_10">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Source City</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="textEdit_5"/>
+       </item>
+       <item>
+        <widget class="QLabel" name="label_11">
+         <property name="font">
+          <font>
+           <pointsize>10</pointsize>
+           <bold>false</bold>
+          </font>
+         </property>
+         <property name="text">
+          <string>Destination City</string>
+         </property>
+        </widget>
+       </item>
+       <item>
+        <widget class="QTextEdit" name="textEdit_6"/>
+       </item>
+      </layout>
+     </widget>
+     <widget class="QPushButton" name="pushButton_19">
+      <property name="geometry">
+       <rect>
+        <x>710</x>
+        <y>350</y>
+        <width>129</width>
+        <height>30</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>12</pointsize>
+       </font>
+      </property>
+      <property name="text">
+       <string>Confirm</string>
+      </property>
+     </widget>
+     <widget class="QTextBrowser" name="textBrowser_3">
+      <property name="geometry">
+       <rect>
+        <x>710</x>
+        <y>170</y>
+        <width>129</width>
+        <height>151</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_12">
+      <property name="geometry">
+       <rect>
+        <x>710</x>
+        <y>140</y>
+        <width>129</width>
+        <height>18</height>
+       </rect>
+      </property>
+      <property name="font">
+       <font>
+        <pointsize>10</pointsize>
+        <bold>false</bold>
+       </font>
+      </property>
+      <property name="text">
+       <string>Transportations </string>
+      </property>
+     </widget>
     </widget>
     <widget class="QWidget" name="page_8">
      <widget class="QWidget" name="verticalLayoutWidget_5">
       <property name="geometry">
        <rect>
         <x>40</x>
-        <y>90</y>
+        <y>70</y>
         <width>131</width>
-        <height>211</height>
+        <height>191</height>
        </rect>
       </property>
       <layout class="QVBoxLayout" name="verticalLayout_6">
@@ -849,7 +943,7 @@
        </font>
       </property>
       <property name="layoutDirection">
-       <enum>Qt::LeftToRight</enum>
+       <enum>Qt::LayoutDirection::LeftToRight</enum>
       </property>
       <property name="text">
        <string>←</string>
@@ -895,8 +989,8 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>714</width>
-     <height>25</height>
+     <width>862</width>
+     <height>22</height>
     </rect>
    </property>
   </widget>

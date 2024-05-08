@@ -72,6 +72,7 @@ public:
 	void ALLAVALIABLEPATHS(string node, double cost);
 	QString outputofpaths(string source, string destination, double targetmoney);
 
+	QString DisplayEdges(string source, string destination);
 
 	QString dfs(string str);
 	QString bfs(string str);

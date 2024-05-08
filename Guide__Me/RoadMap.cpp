@@ -526,8 +526,40 @@ QString RoadMap::bfs(string v) {
     return text;
 
 }
+//////////////////////////////////////////////////////////
 
+QString RoadMap::DisplayEdges(string source, string destination)
+{ 
+    QString text;
+    auto sourceCity = map.find(source);
+    if (sourceCity != map.end())
+    {
+       
+        for (auto& desCity : sourceCity->second)
+        {
+            if (desCity.first == destination && !desCity.second.empty())
+            {
+                for (auto trans = desCity.second.begin(); trans != desCity.second.end(); trans++)
+                {
+                    text.append(trans->vehicle).append(" - ").append(QString::number(trans->price)).append("\n");
 
+                }
+                break;
+            }
+            
+        }
+
+    }
+    else
+    {
+        QMessageBox::information(nullptr, "Alert", "The source city doesn't exist!");  
+    }
+
+    if(text=="") QMessageBox::information(nullptr, "Alert", "No Transporatation between them!");
+     
+    return text;
+
+}
 //void RoadMap::adjlist() {
 //    for (auto& lis : _map) {
 //        string source = lis.first;

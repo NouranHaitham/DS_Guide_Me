@@ -28,6 +28,9 @@ int main(int argc, char* argv[])
     QObject::connect(w.ui.pushButton_14, &QPushButton::clicked, &w, &QtWidgetsClass::slotBFS);
 
     QObject::connect(w.ui.pushButton_16, &QPushButton::clicked, &w, &QtWidgetsClass::slotAllPaths);
+
+
+    QObject::connect(w.ui.pushButton_19, &QPushButton::clicked, &w, &QtWidgetsClass::slotTransDisplay);
     
     w.show();
 
