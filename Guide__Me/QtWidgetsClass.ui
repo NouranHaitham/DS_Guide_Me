@@ -109,7 +109,7 @@
        </rect>
       </property>
       <property name="currentIndex">
-       <number>4</number>
+       <number>2</number>
       </property>
       <widget class="QWidget" name="page_3">
        <widget class="QWidget" name="verticalLayoutWidget">
@@ -118,7 +118,7 @@
           <x>20</x>
           <y>60</y>
           <width>131</width>
-          <height>241</height>
+          <height>253</height>
          </rect>
         </property>
         <layout class="QVBoxLayout" name="verticalLayout">
@@ -182,6 +182,18 @@
            </property>
           </widget>
          </item>
+         <item>
+          <widget class="QPushButton" name="pushButton_18">
+           <property name="font">
+            <font>
+             <pointsize>12</pointsize>
+            </font>
+           </property>
+           <property name="text">
+            <string>Connected</string>
+           </property>
+          </widget>
+         </item>
         </layout>
        </widget>
       </widget>
@@ -234,7 +246,7 @@
         <property name="geometry">
          <rect>
           <x>20</x>
-          <y>80</y>
+          <y>70</y>
           <width>131</width>
           <height>281</height>
          </rect>
@@ -276,22 +288,6 @@
           <widget class="QTextEdit" name="textEdit_3"/>
          </item>
          <item>
-          <widget class="QLabel" name="label_9">
-           <property name="font">
-            <font>
-             <pointsize>10</pointsize>
-             <bold>false</bold>
-            </font>
-           </property>
-           <property name="text">
-            <string>Price</string>
-           </property>
-          </widget>
-         </item>
-         <item>
-          <widget class="QTextEdit" name="textEdit_4"/>
-         </item>
-         <item>
           <widget class="QLabel" name="label_8">
            <property name="font">
             <font>
@@ -306,6 +302,22 @@
          </item>
          <item>
           <widget class="QTextEdit" name="textEdit_2"/>
+         </item>
+         <item>
+          <widget class="QLabel" name="label_9">
+           <property name="font">
+            <font>
+             <pointsize>10</pointsize>
+             <bold>false</bold>
+            </font>
+           </property>
+           <property name="text">
+            <string>Price</string>
+           </property>
+          </widget>
+         </item>
+         <item>
+          <widget class="QTextEdit" name="textEdit_4"/>
          </item>
         </layout>
        </widget>

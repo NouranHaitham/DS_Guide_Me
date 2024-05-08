@@ -11,6 +11,7 @@
 #include<sstream>
 #include<vector>
 #include<fstream>
+#include <QString>
 using namespace std;
 
 
@@ -30,8 +31,6 @@ class RoadMap
 private:
 	// datamembers
 	//      key=> name of source & value=> vector (transporation(source,destination,cost))  
-
-	unordered_map<string, vector <string>> adjList;
 
 	vector<Transportation>vehicle;
 
@@ -59,11 +58,10 @@ public:
 
 	void updateTransportation(const string& source, const string& destination, const string& vehicle, double newPrice);
 
-	bool isComplete();
+	void isComplete();
 	void addEdge(string src, string dest, string method, int price);
 	void addTransportation(string src, string dest, string method, int price);
 	void displayGraph();
-	void Add();
 	bool cityExists(string s);
 	bool ignoreCaseInsensitive(string str1, string str2);
 	string toLower(string s);
@@ -72,13 +70,12 @@ public:
 
 	void ClearElqueue(queue<pair<string, string>>& path);
 	void ALLAVALIABLEPATHS(string node, double cost);
-	void outputofpaths();
+	QString outputofpaths(string source, string destination, double targetmoney);
 
 
-	void dfs(string);
-	void bfs(string);
+	QString dfs(string str);
+	QString bfs(string str);
 
-	void adjlist();
 
 	// destructor
 	~RoadMap();

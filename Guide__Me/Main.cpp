@@ -19,6 +19,16 @@ int main(int argc, char* argv[])
     QObject::connect(w.ui.pushButton_9, &QPushButton::clicked, &w, &QtWidgetsClass::returnButton);
     QObject::connect(w.ui.pushButton_17, &QPushButton::clicked, &w, &QtWidgetsClass::returnButton);
 
+    QObject::connect(w.ui.pushButton_12, &QPushButton::clicked, &w, &QtWidgetsClass::slotAdd);
+    QObject::connect(w.ui.pushButton_10, &QPushButton::clicked, &w, &QtWidgetsClass::slotDelete);
+    QObject::connect(w.ui.pushButton_11, &QPushButton::clicked, &w, &QtWidgetsClass::slotUpdate);
+    QObject::connect(w.ui.pushButton_18, &QPushButton::clicked, &w, &QtWidgetsClass::slotConnect);
+
+    QObject::connect(w.ui.pushButton_13, &QPushButton::clicked, &w, &QtWidgetsClass::slotDFS);
+    QObject::connect(w.ui.pushButton_14, &QPushButton::clicked, &w, &QtWidgetsClass::slotBFS);
+
+    QObject::connect(w.ui.pushButton_16, &QPushButton::clicked, &w, &QtWidgetsClass::slotAllPaths);
+    
     w.show();
 
     return app.exec();
