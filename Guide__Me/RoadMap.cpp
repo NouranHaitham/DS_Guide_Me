@@ -1,6 +1,15 @@
 ﻿#include "RoadMap.h"
 #include <QMessageBox>
 #include <QString>
+
+#include<iostream>
+#include <sstream>
+#include<string>
+#include<list>
+#include<stack>
+#include<unordered_set>
+#include<unordered_map>
+#include<queue>
 using namespace std;
 //////////////////////////////////////////////
 RoadMap::RoadMap()
@@ -257,60 +266,122 @@ string RoadMap::toLower(string s) {
 ////////////////////////////////////////////////
 
 
+//void RoadMap::updateTransportation(const string& source, const string& destination, const string& vehicle, double newPrice) {
+//    // Check if the source exists in the map
+//    auto sourceIter = map.find(source);
+//    if (sourceIter == map.end()) {
+//        //cout << "Source city not found in the map." << endl;
+//        QMessageBox::information(nullptr, "Information", "Source city not found in the map!");
+//        return;
+//    }
+//
+//    // Find the transportation options for the specified destination from the source
+//    auto& destinations = sourceIter->second;
+//    for (auto& destinationPair : destinations) {
+//        if (destinationPair.first == destination) {
+//            // Search for the transportation option with the given vehicle
+//            for (auto& transport : destinationPair.second) {
+//                if (transport.vehicle == vehicle) {
+//                    // Update the price of the transportation option
+//                    transport.price = newPrice;
+//                    //cout << "Transportation price updated successfully." << endl;
+//                    QMessageBox::information(nullptr, "Information", "Transportation price updated successfully!");
+//                    break;
+//                }
+//            }
+//            
+//            //cout << "Transportation vehicle not found for the given source and destination." << endl;
+//            QMessageBox::information(nullptr, "Information", "Transportation vehicle not found for the given source and destination!");
+//            return;
+//        }
+//    }
+//
+//    //sourceIter = map.find(destination);
+//    //destinations = sourceIter->second;
+//    //for (auto& destinationPair : destinations) {
+//    //    if (destinationPair.first == source) {
+//    //        // Search for the transportation option with the given vehicle
+//    //        for (auto& transport : destinationPair.second) {
+//    //            if (transport.vehicle == vehicle) {
+//    //                // Update the price of the transportation option
+//    //                transport.price = newPrice;
+//    //                //cout << "Transportation price updated successfully." << endl;
+//    //                QMessageBox::information(nullptr, "Information", "Transportation price updated successfully!");
+//    //                break;
+//    //            }
+//    //        }
+//
+//    //        //cout << "Transportation vehicle not found for the given source and destination." << endl;
+//    //        QMessageBox::information(nullptr, "Information", "Transportation vehicle not found for the given source and destination!");
+//    //        return;
+//    //    }
+//    //}
+//
+//    //cout << "Destination city not found for the given source." << endl;
+//    QMessageBox::information(nullptr, "Information", "Destination city not found for the given source!");
+//
+//}
+
 void RoadMap::updateTransportation(const string& source, const string& destination, const string& vehicle, double newPrice) {
-    // Check if the source exists in the map
+    // Check if both the source and destination exist in the map
     auto sourceIter = map.find(source);
-    if (sourceIter == map.end()) {
-        //cout << "Source city not found in the map." << endl;
-        QMessageBox::information(nullptr, "Information", "Source city not found in the map!");
+    auto destIter = map.find(destination);
+    if (sourceIter == map.end() || destIter == map.end()) {
+        cout << "Source or destination city not found in the map." << endl;
+        QMessageBox::information(nullptr, "Information", "Destination city not found for the given source!");
         return;
     }
 
     // Find the transportation options for the specified destination from the source
-    auto& destinations = sourceIter->second;
-    for (auto& destinationPair : destinations) {
+    auto& sourceDestinations = sourceIter->second;
+    auto& destDestinations = destIter->second;
+
+    // Update the price from source to destination
+    bool foundSourceDest = false;
+    for (auto& destinationPair : sourceDestinations) {
         if (destinationPair.first == destination) {
+            foundSourceDest = true;
             // Search for the transportation option with the given vehicle
             for (auto& transport : destinationPair.second) {
                 if (transport.vehicle == vehicle) {
                     // Update the price of the transportation option
                     transport.price = newPrice;
-                    //cout << "Transportation price updated successfully." << endl;
-                    QMessageBox::information(nullptr, "Information", "Transportation price updated successfully!");
+                    cout << "Transportation price updated successfully from " << source << " to " << destination << "." << endl;
+                    QMessageBox::information(nullptr, "Information", "Transportation price updated successfully !");
                     break;
                 }
             }
-            
-            //cout << "Transportation vehicle not found for the given source and destination." << endl;
-            QMessageBox::information(nullptr, "Information", "Transportation vehicle not found for the given source and destination!");
-            return;
+            break;
         }
     }
+    if (!foundSourceDest) {
+        cout << "Destination city not found for the given source." << endl;
+        QMessageBox::information(nullptr, "Information", "Destination city not found for the given source !");
+        return;
+    }
 
-    //sourceIter = map.find(destination);
-    //destinations = sourceIter->second;
-    //for (auto& destinationPair : destinations) {
-    //    if (destinationPair.first == source) {
-    //        // Search for the transportation option with the given vehicle
-    //        for (auto& transport : destinationPair.second) {
-    //            if (transport.vehicle == vehicle) {
-    //                // Update the price of the transportation option
-    //                transport.price = newPrice;
-    //                //cout << "Transportation price updated successfully." << endl;
-    //                QMessageBox::information(nullptr, "Information", "Transportation price updated successfully!");
-    //                break;
-    //            }
-    //        }
-
-    //        //cout << "Transportation vehicle not found for the given source and destination." << endl;
-    //        QMessageBox::information(nullptr, "Information", "Transportation vehicle not found for the given source and destination!");
-    //        return;
-    //    }
-    //}
-
-    //cout << "Destination city not found for the given source." << endl;
-    QMessageBox::information(nullptr, "Information", "Destination city not found for the given source!");
-
+    // Update the price from destination to source
+    bool foundDestSource = false;
+    for (auto& destinationPair : destDestinations) {
+        if (destinationPair.first == source) {
+            foundDestSource = true;
+            // Search for the transportation option with the given vehicle
+            for (auto& transport : destinationPair.second) {
+                if (transport.vehicle == vehicle) {
+                    // Update the price of the transportation option
+                    transport.price = newPrice;
+                    cout << "Transportation price updated successfully from " << destination << " to " << source << "." << endl;
+                    break;
+                }
+            }
+            break;
+        }
+    }
+    if (foundDestSource == false)
+    {
+        QMessageBox::information(nullptr, "Information", "Destination city not found for the given source !");
+        cout << "Destination city not found for the given source." << endl;
+    }
 }
 
 /////////////////////////////////////////////////
@@ -357,7 +428,13 @@ void RoadMap::deleteTransportation(string source, string destination, string tra
                     }
                 }
             }
+            else
+                QMessageBox::information(nullptr, "Alert", "The Destination city doesn't exist!");
+
         }
+        else
+            QMessageBox::information(nullptr, "Alert", "The source city doesn't exist!");
+
 }
 ////////////////////////////////////////////////
 void RoadMap::isComplete()
@@ -392,63 +469,54 @@ void RoadMap::isComplete()
 
     //cout << visited.size() << endl;
 
-
     if (map.size() == visited.size())
         QMessageBox::information(nullptr, "Connection", "The Map is Connected! 〜(￣▽￣〜)");
     else
         QMessageBox::information(nullptr, "Connection", "The Map is NOT Connected! ┑(￣Д ￣)┍");
 }
 
-////////////////////////////////////////////////
+void RoadMap::ALLAVALIABLEPATHS(string node, double cost) {
 
-void RoadMap::ClearElqueue(queue<pair<string, string>>& path)
-{
-    while (!path.empty())  path.pop();
-}
-
-void RoadMap::ALLAVALIABLEPATHS(string node, double cost)
-{
-    vis[node] = 1;
-    for (auto child : map[node])
+    if (node == destination) /// node ---child
     {
-        if (!vis[child.first])
-        {
-            if (child.first != destination) /// node ---child
-            {
-                for (auto V : child.second)
-                {
-                    if (cost + V.price < targetmoney)
-                    {
-                        path.push({ child.first,V.vehicle });
-                        ALLAVALIABLEPATHS(child.first, cost + V.price);
-                    }
-                }
+        if (cost <= targetmoney)
+            routs.emplace_back(cost, path);
+        return;
+    }
+    for (auto child : map[node]) {
+
+        if (child.first == source)
+            continue;
+        for (auto V : child.second) {
+            if (!vis[child.first]) {
+                path.emplace_back(child.first, V.vehicle);
+                vis[child.first] = 1;
+                ALLAVALIABLEPATHS(child.first, cost + V.price);
+                path.pop_back();
+                vis[child.first] = 0;
+
+
             }
-            else
-            {
-                for (auto V : child.second)
-                {
-                    if (cost + V.price <= targetmoney)
-                    {
-                        path.push({ child.first,V.vehicle });
-                        routs.push_back({ cost + V.price ,path });
-                    }
-                }
-            }
+
+
         }
     }
-    ClearElqueue(path);
 }
 
 QString RoadMap::outputofpaths(string src, string des, double t)
 {
     vis.clear();
+    routs.clear();
+    path.clear();
     source = src;
     destination = des;
     targetmoney = t;
 
     ALLAVALIABLEPATHS(source, 0);
     sort(routs.begin(), routs.end());
+
+    if (routs.empty())
+        QMessageBox::information(nullptr, "Paths", "There are no transportation to the target destination! ┑(￣Д ￣)┍");
 
     QString text;
     for (auto r : routs)
@@ -490,7 +558,7 @@ QString RoadMap::dfs(string v) {
 
     QString text;
     while (!dfsoutr.empty()) {
-        cout << dfsoutr.front() << endl;
+        //cout << dfsoutr.front() << endl;
         text.append(dfsoutr.front()).append("\n");
         dfsoutr.pop();
     }
@@ -519,7 +587,7 @@ QString RoadMap::bfs(string v) {
    
     QString text;
     while (!bfsout.empty()) {
-        cout << bfsout.front() << endl;
+        //cout << bfsout.front() << endl;
         text.append(bfsout.front()).append("\n");
         bfsout.pop();
     }

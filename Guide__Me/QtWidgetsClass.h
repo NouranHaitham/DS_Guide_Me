@@ -86,7 +86,7 @@ public slots:
 
         QString src = ui.textEdit_16->toPlainText();
         QString text = map->dfs(src.toStdString());
-        ui.textEdit_16->clear();
+        //ui.textEdit_16->clear();
 
         ui.textBrowser->append(text); // Add new text
     };
@@ -97,7 +97,7 @@ public slots:
 
         QString src = ui.textEdit_16->toPlainText();
         QString text = map->bfs(src.toStdString());
-        ui.textEdit_16->clear();
+        //ui.textEdit_16->clear();
 
         ui.textBrowser->append(text); // Add new text
 

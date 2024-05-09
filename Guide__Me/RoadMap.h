@@ -36,7 +36,7 @@ private:
 
 	string source, destination; double targetmoney;
 	unordered_map<string, bool>vis;
-	queue<pair<string, string>>path;
+	deque<pair<string, string>>path;
 	vector<pair<double, queue<pair<string, string>>>>routs;
 
 	//dfs
@@ -68,7 +68,6 @@ public:
 
 	void deleteTransportation(string source, string destination, string transport);
 
-	void ClearElqueue(queue<pair<string, string>>& path);
 	void ALLAVALIABLEPATHS(string node, double cost);
 	QString outputofpaths(string source, string destination, double targetmoney);
 
