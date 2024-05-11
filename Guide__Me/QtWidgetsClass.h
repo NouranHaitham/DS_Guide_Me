@@ -29,7 +29,6 @@ public:
     void allPathsButton();
     void visualizeNodes(RoadMap* map);
     void visualizeEdges(RoadMap* map);
-    void onPushButtonClicked();
 
     Ui::QtWidgetsClassClass ui;
     QGraphicsScene* scene;
@@ -82,30 +81,28 @@ public slots:
 
     void slotDFS() {
 
-        ui.textBrowser->clear(); // Clear existing contents
+        ui.textBrowser->clear(); 
 
         QString src = ui.textEdit_16->toPlainText();
         QString text = map->dfs(src.toStdString());
-        //ui.textEdit_16->clear();
 
-        ui.textBrowser->append(text); // Add new text
+        ui.textBrowser->append(text); 
     };
 
     void slotBFS() {
 
-        ui.textBrowser->clear(); // Clear existing contents
+        ui.textBrowser->clear(); 
 
         QString src = ui.textEdit_16->toPlainText();
         QString text = map->bfs(src.toStdString());
-        //ui.textEdit_16->clear();
 
-        ui.textBrowser->append(text); // Add new text
+        ui.textBrowser->append(text); 
 
     };
 
     void slotAllPaths() {
 
-        ui.textBrowser_2->clear(); // Clear existing contents
+        ui.textBrowser_2->clear(); 
 
         QString src = ui.textEdit_17->toPlainText();
         QString des = ui.textEdit_18->toPlainText();
@@ -117,7 +114,7 @@ public slots:
         ui.textEdit_18->clear();
         ui.textEdit_19->clear();
 
-        ui.textBrowser_2->append(text); // Add new text
+        ui.textBrowser_2->append(text); 
 
     };
 
@@ -129,11 +126,7 @@ public slots:
        
         QString text = map->DisplayEdges(src.toStdString(), des.toStdString());
 
-
-       // ui.textEdit_5->clear();
-       //ui.textEdit_6->clear();
-
-        ui.textBrowser_3->append(text); // Add new text
+        ui.textBrowser_3->append(text); 
 
 
     }

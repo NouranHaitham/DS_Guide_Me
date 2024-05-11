@@ -40,4 +40,9 @@
       <Filter>Source Files</Filter>
     </QtUic>
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Input.txt">
+      <Filter>Source Files</Filter>
+    </Text>
+  </ItemGroup>
 </Project>

@@ -4,6 +4,7 @@
 
 int main(int argc, char* argv[])
 {
+    //
     QApplication app(argc, argv);
     QtWidgetsClass w;
     QObject::connect(w.ui.pushButton, &QPushButton::clicked, &w, &QtWidgetsClass::GraphRead);

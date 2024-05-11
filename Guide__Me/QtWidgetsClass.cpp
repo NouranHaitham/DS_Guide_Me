@@ -4,9 +4,6 @@ QtWidgetsClass::QtWidgetsClass(QWidget* parent)
     : QMainWindow(parent)
 {
     ui.setupUi(this);
-    // Display content on the screen
-    
-
 }
 
 QtWidgetsClass::~QtWidgetsClass()
@@ -23,17 +20,9 @@ void QtWidgetsClass::GraphRead() {
     visualizeNodes(map);
     visualizeEdges(map);
 
-   
     //go to 2nd page (2nd page name is from the scene builder)
     ui.stackedWidget->setCurrentWidget(ui.page_2);
     ui.stackedWidget_2->setCurrentWidget(ui.page_3);
-}
-
-
-
-
-void QtWidgetsClass::onPushButtonClicked() {
-
 }
 
 void QtWidgetsClass::addButton()
@@ -69,9 +58,11 @@ void QtWidgetsClass::allPathsButton()
 
 
 void QtWidgetsClass::visualizeNodes(RoadMap* map) {
+
     int x = 0, y = 500;
     int i = 0;
     int spaceX=-10, spaceY=45;
+
     for (const auto& pair : map->map) {
         QGraphicsEllipseItem* node = scene->addEllipse(x, y, 40, 40);
         node->setBrush(Qt::red);
@@ -90,28 +81,33 @@ void QtWidgetsClass::visualizeNodes(RoadMap* map) {
         coordinates.insert({ pair.first, { x,y + 20 } });
 
         i++;
+
         if (i % 2 == 0) {
             x += 200;
             spaceX = 45;
             spaceY = 0;
         }
-        else {
+        else 
+        {
             x = 0;
             y -= 100;
             x -= 100;
 
-            spaceX = -30 - textWidth;
+            spaceX = - 30 - textWidth;
             spaceY = 0;
         }
     }
 }
 
 void QtWidgetsClass::visualizeEdges(RoadMap* map) {
-    for (const auto& pair : map->map) {
+
+    for (const auto& pair : map->map) 
+    {
         int x1 = coordinates[pair.first].first;
         int y1 = coordinates[pair.first].second;
 
-        for (const auto& transport : pair.second) {
+        for (const auto& transport : pair.second) 
+        {
             if (!transport.second.empty())
             {
                 int x2 = coordinates[transport.first].first;
@@ -120,7 +116,7 @@ void QtWidgetsClass::visualizeEdges(RoadMap* map) {
 
                 QPen pen = edge->pen();
                 pen.setColor(Qt::red);
-                pen.setWidth(5); // Set line thickness to 3
+                pen.setWidth(5);                // Set line thickness 
                 edge->setPen(pen);
 
            /*     // Add weight text
