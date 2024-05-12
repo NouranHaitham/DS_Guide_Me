@@ -155,12 +155,17 @@ void RoadMap::addEdge(string src, string dest, string method, double price) {
 }
 
 void RoadMap::addTransportation(string src, string dest, string method, double price) {
+
     auto sourceCity = map.find(src);
     auto destinationCity = map.find(dest);
 
     // Check if source and destination cities exist
     if (sourceCity == map.end()) {
         QMessageBox::information(nullptr, "Warning", "Source city is not found in the map!");
+        return;
+    }
+    if (destinationCity == map.end()) {
+        QMessageBox::information(nullptr, "Warning", "Destination city is not found in the map!");
         return;
     }
 
@@ -200,37 +205,13 @@ bool RoadMap::transportationExists(string src, string dest, string method) {
 
     // checks if the method exists in the transportation list
     for (auto& transPair : destExit->second) {
-        if (compare(transPair.vehicle, method)) {
+        if (transPair.vehicle == method) {
             return true;
         }
     }
 
     return false;
 }
-
-bool RoadMap::compare(string str1, string str2) { // compares two strings
-    if (str1.length() != str2.length()) {
-        return false; // If lengths are different, strings are not equal
-    }
-
-    for (int i = 0; i < str1.length() && i < str2.length(); ++i) { // check for other string1 length and string2 length
-        if (tolower(str1[i]) != tolower(str2[i])) {
-            return false; // If characters are different, strings are not equal
-        }
-    }
-
-    return true; // Strings are equal
-}
-
-string RoadMap::toLower(string s) 
-{
-    string result = s;
-    for (char& c : result) {
-        c = tolower(c);
-    }
-    return result;
-}
-
 /*
 void RoadMap::displayGraph() {
 
@@ -271,8 +252,9 @@ bool RoadMap::cityExists(string s) {
 
 //////////////////////////////////////////////
 
-void RoadMap::updateTransportation(const string& source, const string& destination, const string& vehicle, double newPrice) {
-   
+void RoadMap::updateTransportation(string source, string destination, string vehicle, double newPrice) 
+{
+
     // Check if both the source and destination exist in the map
     auto sourceIter = map.find(source);
     if (sourceIter == map.end()) 
@@ -283,12 +265,13 @@ void RoadMap::updateTransportation(const string& source, const string& destinati
     }
 
     auto destIter = map[source].find(destination);
-    if (destIter == map[source].end() && destIter->second.size() != 0)
+    if (destIter == map[source].end() || (destIter != map[source].end() && destIter->second.size() == 0))
     {
         // cout << "Source or destination city not found in the map." << endl;
         QMessageBox::information(nullptr, "Information", "There is no transportation between source and destination!");
         return;
     }
+
 
     // Find the transportation options for the specified destination from the source
     auto& destMap = sourceIter->second; // second map
