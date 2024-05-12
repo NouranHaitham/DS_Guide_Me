@@ -38,8 +38,8 @@ private:
 	double targetmoney;
 
 	unordered_map<string, bool>vis;
-	deque<pair<string, string>>path;
-	vector<pair<double, queue<pair<string, string>>>>routs;
+	vector<pair<string, string>>path;
+	set<pair<double, vector<pair<string, string>>>>routs;
 
 	//dfs
 	stack<string> dfs_stack;
@@ -52,7 +52,7 @@ private:
 public:
 
 	//   key=> name of source & value=> vector (transporation(source,destination,cost))  
-	unordered_map<string, vector <pair<string, vector<Transportation>>>> map;
+	unordered_map<string, unordered_map<string, vector<Transportation>>> map;
 
 	// constructors
 
@@ -65,7 +65,8 @@ public:
 
 	void addEdge(string src, string dest, string method, double price);
 	void addTransportation(string src, string dest, string method, double price);
-	bool ignoreCaseInsensitive(string str1, string str2);
+	bool transportationExists(string src, string dest, string method);
+	bool compare(string str1, string str2);
 	string toLower(string s);
 	
 	//void displayGraph();

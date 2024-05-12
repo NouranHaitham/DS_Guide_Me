@@ -3,7 +3,6 @@
 
 
 ////////////////////////////////////////////////////////
-
 RoadMap::RoadMap()
 {
     /*
@@ -54,34 +53,34 @@ Dahab - BeniSuef Microbus 200 Bus 315
         }
 
         // finally we add it [undirected graph]
-        map[source].push_back({ destination,trans });
-        map[destination].push_back({ source,trans });
+        map[source].insert({ destination,trans });
+        map[destination].insert({ source,trans });
 
     }
 
-    /*
+
     //For printing the map if needed
 
-    cout << _map.size() << endl;
+    cout << map.size() << endl;
 
-    for (unordered_map<string, vector <pair<string, vector<Transportation>>>>::iterator start = _map.begin(); start != _map.end(); start++)
+    for (unordered_map<string, unordered_map<string, vector<Transportation>>>::iterator source = map.begin(); source != map.end(); source++)
     {
-        cout << start->first << endl;
-
-        for (int i = 0; i < start->second.size(); i++)
+        cout << source->first << endl;
+        for (unordered_map<string, vector<Transportation>>::iterator dest = source->second.begin(); dest != source->second.end(); dest++)
         {
-            cout << start->second[i].first << " ";
+            cout << dest->first << " ";
 
-            for (int j = 0; j < start->second[i].second.size(); j++) {
+            for (int j = 0; j < dest->second.size(); j++) {
 
-                cout<< start->second[i].second[j].vechile << " "<< start->second[i].second[j].price<<"  ";
+                cout << dest->second[j].vehicle << " " << dest->second[j].price << "  ";
             }
 
             cout << endl;
         }
-        cout<< endl;
+        cout << endl;
     }
-  */
+
+
     file.close();
 }
 
@@ -96,29 +95,32 @@ RoadMap::~RoadMap()
 
     set<pair<string, string>> isPrinted;
 
-    for (unordered_map<string, vector <pair<string, vector<Transportation>>>>::iterator source = map.begin(); source != map.end(); source++)
+
+    for (auto source = map.begin(); source != map.end(); source++)
     {
 
-        for (unordered_map<string, vector <pair<string, vector<Transportation>>>>::iterator dest = map.begin(); dest != map.end(); dest++)
+        for (auto dest = map.begin(); dest != map.end(); dest++)
         {
 
-            for (int i = 0; i < source->second.size(); i++)
+            for (auto sourceDestin : source->second)
             {
 
-                if (isPrinted.find({dest->first,source->first}) != isPrinted.end())
+                if (isPrinted.find({ dest->first,source->first }) != isPrinted.end())
                 {
                     break;
                 }
 
-                if (source->second[i].first == dest->first) {
+                if (sourceDestin.first == dest->first)
+                {
 
-                    file << source->first << " - " << dest->first;    
+                    file << source->first << " - " << dest->first;
 
                     isPrinted.insert({ source->first ,dest->first });
 
-                    for (int j = 0; j < source->second[i].second.size(); j++) {
+                    for (int j = 0; j < sourceDestin.second.size(); j++)
+                    {
 
-                        file << " " << source->second[i].second[j].vehicle << " " << source->second[i].second[j].price;
+                        file << " " << sourceDestin.second[j].vehicle << " " << sourceDestin.second[j].price;
 
                     }
                     file << endl;
@@ -131,67 +133,40 @@ RoadMap::~RoadMap()
     }
     file.close();
 }
+
 /////////////////////////////////////////////
+
+// unordered_map<string, unordered_map<string, vector<Transportation>>> map;
 
 void RoadMap::addEdge(string src, string dest, string method, double price) {
 
     // undirected graph
-   /* vector<Transportation> transVector;
-    transVector.push_back(Transportation(method, price));
-    map[src].push_back(make_pair(dest, transVector));
-    map[dest].push_back(make_pair(src, transVector));
-   */
-
-    for (vector <pair<string, vector<Transportation>>>::iterator destOf_source = map[src].begin(); destOf_source != map[src].end(); destOf_source++)
-    {
-        if (destOf_source->first == dest)
-        {
-            destOf_source->second.push_back( {method,price} );
-        }
+    auto& destinations = map[src];
+    auto destExit = destinations.find(dest);
+    if (destExit == destinations.end()) {
+        vector<Transportation> transVector;
+        transVector.push_back(Transportation(method, price));
+        map[src].insert(make_pair(dest, transVector));
+    }
+    else {
+        map[src][dest].push_back(Transportation(method, price));
     }
 
 }
+
 void RoadMap::addTransportation(string src, string dest, string method, double price) {
     auto sourceCity = map.find(src);
     auto destinationCity = map.find(dest);
 
     // Check if source and destination cities exist
-    if (sourceCity == map.end() || destinationCity == map.end()) {
-        QMessageBox::information(nullptr, "Warning", "Source or destination city is not found in the map!");
+    if (sourceCity == map.end()) {
+        QMessageBox::information(nullptr, "Warning", "Source city is not found in the map!");
         return;
     }
 
-    // for undirected graph
-    bool existsForward = false;
-    bool existsBackward = false;
-
-    // Check forward direction: source to destination
-    auto& sourceDestinations = sourceCity->second;
-    for (auto& destinationPair : sourceDestinations) {
-        if (ignoreCaseInsensitive(destinationPair.first, dest)) { // Check if the destination exists
-            for (auto& transPair : destinationPair.second) {
-                if (ignoreCaseInsensitive(transPair.vehicle, method)) { // Check if the method exists
-                    existsForward = true;
-                    break;
-                }
-            }
-            break;
-        }
-    }
-
-    // Check backward direction: destination to source
-    auto& destDestinations = destinationCity->second;
-    for (auto& destinationPair : destDestinations) {
-        if (ignoreCaseInsensitive(destinationPair.first, src)) { // Check if the source exists
-            for (auto& transPair : destinationPair.second) {
-                if (ignoreCaseInsensitive(transPair.vehicle, method)) { // Check if the method exists
-                    existsBackward = true;
-                    break;
-                }
-            }
-            break;
-        }
-    }
+    // Check if transportation already exists in both directions
+    bool existsForward = transportationExists(src, dest,method);
+    bool existsBackward = transportationExists(dest, src, method);
 
     // If the transportation already exists in both directions
     if (existsForward && existsBackward) {
@@ -210,7 +185,30 @@ void RoadMap::addTransportation(string src, string dest, string method, double p
     QMessageBox::information(nullptr, "Information", "New transportation has been added!");
 }
 
-bool RoadMap::ignoreCaseInsensitive(string str1, string str2) { // compares two strings
+bool RoadMap::transportationExists(string src, string dest, string method) {
+    auto it = map.find(src);
+    if (it == map.end()) { // checks if src exists in the map 
+        return false;
+    }
+
+    // checks if destination exits in the destination of the source
+    auto& destinations = it->second;
+    auto destExit = destinations.find(dest);
+    if (destExit == destinations.end()) {
+        return false;
+    }
+
+    // checks if the method exists in the transportation list
+    for (auto& transPair : destExit->second) {
+        if (compare(transPair.vehicle, method)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
+bool RoadMap::compare(string str1, string str2) { // compares two strings
     if (str1.length() != str2.length()) {
         return false; // If lengths are different, strings are not equal
     }
@@ -271,192 +269,120 @@ bool RoadMap::cityExists(string s) {
 }
 */
 
-////////////////////////////////////////////////
-
-//void RoadMap::updateTransportation(const string& source, const string& destination, const string& vehicle, double newPrice) {
-//    // Check if the source exists in the map
-//    auto sourceIter = map.find(source);
-//    if (sourceIter == map.end()) {
-//        //cout << "Source city not found in the map." << endl;
-//        QMessageBox::information(nullptr, "Information", "Source city not found in the map!");
-//        return;
-//    }
-//
-//    // Find the transportation options for the specified destination from the source
-//    auto& destinations = sourceIter->second;
-//    for (auto& destinationPair : destinations) {
-//        if (destinationPair.first == destination) {
-//            // Search for the transportation option with the given vehicle
-//            for (auto& transport : destinationPair.second) {
-//                if (transport.vehicle == vehicle) {
-//                    // Update the price of the transportation option
-//                    transport.price = newPrice;
-//                    //cout << "Transportation price updated successfully." << endl;
-//                    QMessageBox::information(nullptr, "Information", "Transportation price updated successfully!");
-//                    break;
-//                }
-//            }
-//            
-//            //cout << "Transportation vehicle not found for the given source and destination." << endl;
-//            QMessageBox::information(nullptr, "Information", "Transportation vehicle not found for the given source and destination!");
-//            return;
-//        }
-//    }
-//
-//    //sourceIter = map.find(destination);
-//    //destinations = sourceIter->second;
-//    //for (auto& destinationPair : destinations) {
-//    //    if (destinationPair.first == source) {
-//    //        // Search for the transportation option with the given vehicle
-//    //        for (auto& transport : destinationPair.second) {
-//    //            if (transport.vehicle == vehicle) {
-//    //                // Update the price of the transportation option
-//    //                transport.price = newPrice;
-//    //                //cout << "Transportation price updated successfully." << endl;
-//    //                QMessageBox::information(nullptr, "Information", "Transportation price updated successfully!");
-//    //                break;
-//    //            }
-//    //        }
-//
-//    //        //cout << "Transportation vehicle not found for the given source and destination." << endl;
-//    //        QMessageBox::information(nullptr, "Information", "Transportation vehicle not found for the given source and destination!");
-//    //        return;
-//    //    }
-//    //}
-//
-//    //cout << "Destination city not found for the given source." << endl;
-//    QMessageBox::information(nullptr, "Information", "Destination city not found for the given source!");
-//
-//}
+//////////////////////////////////////////////
 
 void RoadMap::updateTransportation(const string& source, const string& destination, const string& vehicle, double newPrice) {
    
     // Check if both the source and destination exist in the map
     auto sourceIter = map.find(source);
-    auto destIter = map.find(destination);
-
-    if (sourceIter == map.end() || destIter == map.end()) 
+    if (sourceIter == map.end()) 
     {
        // cout << "Source or destination city not found in the map." << endl;
-        QMessageBox::information(nullptr, "Information", "Destination city is not found for the given source!");
+        QMessageBox::information(nullptr, "Information", "Source city doesn't exist!");
+        return;
+    }
+
+    auto destIter = map[source].find(destination);
+    if (destIter == map[source].end() && destIter->second.size() != 0)
+    {
+        // cout << "Source or destination city not found in the map." << endl;
+        QMessageBox::information(nullptr, "Information", "There is no transportation between source and destination!");
         return;
     }
 
     // Find the transportation options for the specified destination from the source
-    auto& sourceDestinations = sourceIter->second;
-    auto& destDestinations = destIter->second;
+    auto& destMap = sourceIter->second; // second map
+    auto& transVector = destIter->second; // vector of transportation
 
     // Update the price from source to destination
-    bool foundSourceDest = false;
-    for (auto& destinationPair : sourceDestinations) 
+    bool transExist = false;
+ 
+    // Search for the transportation option with the given vehicle
+    for (auto& transport : transVector)
     {
-        if (destinationPair.first == destination) {
-            foundSourceDest = true;
-            // Search for the transportation option with the given vehicle
-            for (auto& transport : destinationPair.second) 
-            {
-                if (transport.vehicle == vehicle) {
-                    // Update the price of the transportation option
-                    transport.price = newPrice;
-                   // cout << "Transportation price updated successfully from " << source << " to " << destination << "." << endl;
-                    QMessageBox::information(nullptr, "Information", "Transportation price updated successfully !");
-                    break;
-                }
-            }
+        if (transport.vehicle == vehicle) {
+            // Update the price of the transportation option
+            transport.price = newPrice;
+            // cout << "Transportation price updated successfully from " << source << " to " << destination << "." << endl;
+            QMessageBox::information(nullptr, "Information", "Transportation price updated successfully !");
+            transExist = true;
             break;
         }
     }
-    if (!foundSourceDest) 
+    if (!transExist)
     {
       //  cout << "Destination city not found for the given source." << endl;
-        QMessageBox::information(nullptr, "Information", "Destination city is not found for the given source !");
+        QMessageBox::information(nullptr, "Information", "Transportation doesn't exist!");
         return;
     }
 
     // Update the price from destination to source
-    bool foundDestSource = false;
+    // Search for the transportation option with the given vehicle
 
-    for (auto& destinationPair : destDestinations) 
+    for (auto& transport : map[destination][source])
     {
-        if (destinationPair.first == source) 
+        if (transport.vehicle == vehicle)
         {
-            foundDestSource = true;
-            // Search for the transportation option with the given vehicle
-            for (auto& transport : destinationPair.second)
-            {
-                if (transport.vehicle == vehicle) 
-                {
-                    // Update the price of the transportation option
-                    transport.price = newPrice;
-                    cout << "Transportation price updated successfully from " << destination << " to " << source << "." << endl;
-                    break;
-                }
-            }
+            // Update the price of the transportation option
+            transport.price = newPrice;
+            cout << "Transportation price updated successfully from " << destination << " to " << source << "." << endl;
             break;
         }
-    }
-    if (foundDestSource == false)
-    {
-        QMessageBox::information(nullptr, "Information", "Destination city not found for the given source !");
-        // cout << "Destination city not found for the given source." << endl;
-    }
+    } 
 }
 
 /////////////////////////////////////////////////
 void RoadMap::deleteTransportation(string source, string destination, string transport)
 {
-        // Display all edges
-        auto sourceCity = map.find(source);
-        if (sourceCity != map.end())
-        {
-            // Delete the edge from the source node
-            for (auto& desCity : sourceCity->second)
-            {
-                if (desCity.first == destination)
-                {
-                    for (auto trans = desCity.second.begin(); trans != desCity.second.end(); trans++)
-                    {
-                        if (trans->vehicle == transport)
-                        {
-                            desCity.second.erase(trans);
-                            break;
-                        }
-                    }
+    auto sourceIter = map.find(source);
+    if (sourceIter == map.end())
+    {
+        // cout << "Source or destination city not found in the map." << endl;
+        QMessageBox::information(nullptr, "Information", "Source city doesn't exist!");
+        return;
+    }
 
-                }
-            }
+    auto destIter = map[source].find(destination);
+    if (destIter == map[source].end() || (destIter != map[source].end() && destIter->second.size() == 0))
+    {
+        // cout << "Source or destination city not found in the map." << endl;
+        QMessageBox::information(nullptr, "Information", "There is no transportation between source and destination!");
+        return;
+    }
 
-            // Delete the edge from the destination node
-            sourceCity = map.find(destination);
-            if (sourceCity != map.end())
-            {
-                for (auto& desCity : sourceCity->second)
-                {
-                    if (desCity.first == source)
-                    {
-                        for (auto trans = desCity.second.begin(); trans != desCity.second.end(); trans++)
-                        {
-                            if (trans->vehicle == transport)
-                            {
-                                desCity.second.erase(trans);
-                                break;
-                            }
-
-                        }
-                    }
-                }
-            }
-            else
-                QMessageBox::information(nullptr, "Alert", "The Destination city doesn't exist!");
-
+    bool transExist = false;
+    auto sourceCity = map.find(source);
+  
+    // Delete the edge from the source node
+    auto desCity = sourceCity->second.find(destination);
+    for (auto trans = desCity->second.begin(); trans != desCity->second.end(); trans++) {
+        if (trans->vehicle == transport) {
+            desCity->second.erase(trans);
+            transExist = true;
+            break;
         }
-        else
-            QMessageBox::information(nullptr, "Alert", "The source city doesn't exist!");
+    }
+   
+    // Delete the edge from the destination node
 
-
+    desCity = map[destination].find(source);
+    for (auto trans = desCity->second.begin(); trans != desCity->second.end(); trans++) {
+        if (trans->vehicle == transport) {
+            desCity->second.erase(trans);
+            transExist = true;
+            break;
+        }
+    }
+    
+     
+    if (!transExist) {
+        QMessageBox::information(nullptr, "Information", "The Transportation doesn't exist!");
+    }
+    else {
         QMessageBox::information(nullptr, "Information", "The Transportation has been deleted successfully !");
-
+    }
 }
+
 /////////////////////////////////////////////////////////////////
 void RoadMap::isComplete()
 {
@@ -477,7 +403,7 @@ void RoadMap::isComplete()
 
             //cout << curr_city << endl;
 
-            for (vector <pair<string, vector<Transportation>>>::iterator start = map[curr_city].begin(); start != map[curr_city].end(); start++)
+            for (unordered_map <string, vector<Transportation>>::iterator start = map[curr_city].begin(); start != map[curr_city].end(); start++)
             {
                 if ((visited.find(start->first) == visited.end()) && (start->second.size() != 0))
                 {
@@ -497,13 +423,13 @@ void RoadMap::isComplete()
 }
 
 ///////////////////////////////////////////////////////////////////////////////////////
-
+//
 void RoadMap::ALLAVALIABLEPATHS(string node, double cost) {
 
     if (node == destination) /// node ---child
     {
         if (cost <= targetmoney)
-            routs.emplace_back(cost, path);
+          routs.emplace(cost, path);
         return;
     }
     for (auto child : map[node]) {
@@ -541,29 +467,26 @@ QString RoadMap::outputofpaths(string src, string des, double t)
     targetmoney = t;
 
     ALLAVALIABLEPATHS(source, 0);
-    sort(routs.begin(), routs.end());
+    //sort(routs.begin(), routs.end());
 
     if (routs.empty())
         QMessageBox::information(nullptr, "Paths", "There are no suitable paths to the target destination with your current budget! ┑(￣Д ￣)┍");
 
     QString text;
-    for (auto r : routs)
-    {
-        
+
+    for (auto rout : routs) {
         text.append(source).append(" ");
-        while (!r.second.empty()) // what was the wrong
+        for (auto r : rout.second)
         {
-            text.append("( ").append(r.second.front().second).append(" ) ").append(r.second.front().first).append(" ");
-            r.second.pop();
+            text.append("( ").append(r.second).append(" ) ").append(r.first).append(" ");
         }
-        text.append(QString::number(r.first)).append("\n");
+        text.append(QString::number(rout.first)).append("\n"); // price
     }
     return text;
-
 }
 
 //////////////////////////////////////////////////////////////////////////////
-// 
+ 
 //dfs algo
 QString RoadMap::dfs(string v) {
 
@@ -653,23 +576,12 @@ QString RoadMap::DisplayEdges(string source, string destination)
 { 
     QString text;
     auto sourceCity = map.find(source);
-    if (sourceCity != map.end())
+    if (sourceCity != map.end() && map[source].find(destination) != map[source].end())
     {
-       
-        for (auto& desCity : sourceCity->second)
+        for (auto& trans : map[source][destination])
         {
-            if (desCity.first == destination && !desCity.second.empty())
-            {
-                for (auto trans = desCity.second.begin(); trans != desCity.second.end(); trans++)
-                {
-                    text.append(trans->vehicle).append(" - ").append(QString::number(trans->price)).append("\n");
-
-                }
-                break;
-            }
-            
+            text.append(trans.vehicle).append(" - ").append(QString::number(trans.price)).append("\n");
         }
-
     }
     else
     {
