@@ -25,6 +25,8 @@ int main(int argc, char* argv[])
     QObject::connect(w.ui.pushButton_11, &QPushButton::clicked, &w, &QtWidgetsClass::slotUpdate);
     QObject::connect(w.ui.pushButton_18, &QPushButton::clicked, &w, &QtWidgetsClass::slotConnect);
 
+    QObject::connect(w.ui.pushButton_20, &QPushButton::clicked, &w, &QtWidgetsClass::slotComplete);
+
     QObject::connect(w.ui.pushButton_13, &QPushButton::clicked, &w, &QtWidgetsClass::slotDFS);
     QObject::connect(w.ui.pushButton_14, &QPushButton::clicked, &w, &QtWidgetsClass::slotBFS);
 
@@ -37,4 +39,3 @@ int main(int argc, char* argv[])
 
     return app.exec();
 }
-//

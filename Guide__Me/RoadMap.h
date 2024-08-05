@@ -61,6 +61,7 @@ public:
 	// methods
 	void updateTransportation(string source, string destination, string vehicle, double newPrice);
 
+	void isConnected();
 	void isComplete();
 
 	void addEdge(string src, string dest, string method, double price);

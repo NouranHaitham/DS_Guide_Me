@@ -199,6 +199,7 @@ bool RoadMap::transportationExists(string src, string dest, string method) {
     // checks if destination exits in the destination of the source
     auto& destinations = it->second;
     auto destExit = destinations.find(dest);
+
     if (destExit == destinations.end()) {
         return false;
     }
@@ -367,7 +368,7 @@ void RoadMap::deleteTransportation(string source, string destination, string tra
 }
 
 /////////////////////////////////////////////////////////////////
-void RoadMap::isComplete()
+void RoadMap::isConnected()
 {
     stack<string> explore;
     unordered_set<string> visited;
@@ -405,6 +406,48 @@ void RoadMap::isComplete()
         QMessageBox::information(nullptr, "Connection", "The map is NOT Connected! ┑(￣Д ￣)┍");
 }
 
+///////////////////////////////////////////////////////////////////////////////////////
+
+void RoadMap::isComplete()
+{
+
+    int cities = map.size()-1;
+
+    bool complete = true;
+
+
+    for (unordered_map<string, unordered_map<string, vector<Transportation>>>::iterator source = map.begin(); source != map.end(); source++)
+    {
+        cout << source->first << endl;
+        
+        int citiesOfSource = 0;
+
+
+        for (unordered_map<string, vector<Transportation>>::iterator dest = source->second.begin(); dest != source->second.end(); dest++)
+        {
+            if (!dest->second.empty())
+            {
+                cout << dest->first << " ";
+                citiesOfSource++;
+            }
+        }
+        cout << endl;
+
+        if (cities != citiesOfSource)
+        {
+            complete = false;
+            break;
+        }
+
+    }
+
+
+    if (complete)
+        QMessageBox::information(nullptr, "Complete", "The map is Complete! 〜(￣▽￣〜)");
+    else
+        QMessageBox::information(nullptr, "Complete", "The map is NOT Complete! ┑(￣Д ￣)┍");
+
+}
 ///////////////////////////////////////////////////////////////////////////////////////
 //
 void RoadMap::ALLAVALIABLEPATHS(string node, double cost) {

@@ -36,6 +36,7 @@ public:
     std::unordered_map<std::string, std::pair<int, int>> coordinates;
 
 public slots:
+
     void slotAdd() {
         QString src = ui.textEdit->toPlainText();
         QString des = ui.textEdit_3->toPlainText();
@@ -74,6 +75,12 @@ public slots:
     };
 
     void slotConnect() {
+
+        map->isConnected();
+
+    };
+
+    void slotComplete() {
 
         map->isComplete();
 
@@ -127,9 +134,10 @@ public slots:
         QString text = map->DisplayEdges(src.toStdString(), des.toStdString());
 
         ui.textBrowser_3->append(text); 
-
-
     }
+
+
+
 
 
 };
