@@ -11,6 +11,16 @@ QtWidgetsClass::~QtWidgetsClass()
     map->~RoadMap();
 
 }
+void QtWidgetsClass::startButton()
+{
+    GraphRead();
+    vector<QComboBox*> comboBoxes = { ui.comboBox, ui.comboBox_2, ui.comboBox_3, ui.comboBox_4, ui.comboBox_5, ui.comboBox_6, ui.comboBox_7, ui.comboBox_8, ui.comboBox_9 };
+    for (QComboBox* comboBox : comboBoxes) {
+        for ( auto pair : map->map) {
+            comboBox->addItem(QString::fromStdString(pair.first));
+        }
+    }
+}
 void QtWidgetsClass::GraphRead() {
 
     scene = new QGraphicsScene();
@@ -48,7 +58,18 @@ void QtWidgetsClass::traversButton()
 
 void QtWidgetsClass::returnButton()
 {
+    vector<QComboBox*> comboBoxes = { ui.comboBox, ui.comboBox_2, ui.comboBox_3, ui.comboBox_4, ui.comboBox_5, ui.comboBox_6, ui.comboBox_7, ui.comboBox_8, ui.comboBox_9 };
 
+    for (QComboBox* comboBox : comboBoxes) {
+        if (comboBox->count() > 0) { // Check if there are items in the combo box
+            comboBox->setCurrentIndex(0); // Set the current index to the first item
+        }
+    }
+
+    vector<QTextEdit*> textEdits = { ui.textEdit_2, ui.textEdit_4, ui.textEdit_11, ui.textEdit_12, ui.textEdit_15, ui.textEdit_19};
+    for (QTextEdit* textEdit : textEdits) {
+        textEdit->clear();
+    }
     ui.stackedWidget->setCurrentWidget(ui.page_2);
     ui.stackedWidget_2->setCurrentWidget(ui.page_3);
 }

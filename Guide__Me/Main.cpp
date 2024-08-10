@@ -7,7 +7,7 @@ int main(int argc, char* argv[])
     //
     QApplication app(argc, argv);
     QtWidgetsClass w;
-    QObject::connect(w.ui.pushButton, &QPushButton::clicked, &w, &QtWidgetsClass::GraphRead);
+    QObject::connect(w.ui.pushButton, &QPushButton::clicked, &w, &QtWidgetsClass::startButton);
     QObject::connect(w.ui.pushButton_3, &QPushButton::clicked, &w, &QtWidgetsClass::addButton);
     QObject::connect(w.ui.pushButton_2, &QPushButton::clicked, &w, &QtWidgetsClass::updateButton);
     QObject::connect(w.ui.pushButton_4, &QPushButton::clicked, &w, &QtWidgetsClass::deleteButton);
@@ -33,7 +33,7 @@ int main(int argc, char* argv[])
     QObject::connect(w.ui.pushButton_16, &QPushButton::clicked, &w, &QtWidgetsClass::slotAllPaths);
 
 
-    QObject::connect(w.ui.pushButton_19, &QPushButton::clicked, &w, &QtWidgetsClass::slotTransDisplay);
+    //QObject::connect(w.ui.pushButton_19, &QPushButton::clicked, &w, &QtWidgetsClass::slotTransDisplay);
     
     w.show();
 

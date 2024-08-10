@@ -18,6 +18,7 @@
 #include <QGraphicsSceneMouseEvent>
 #include <QString>
 #include <QTextBrowser>
+#include <QMessageBox>
 
 
 
@@ -31,6 +32,7 @@ public:
     QtWidgetsClass(QWidget* parent = nullptr);
     ~QtWidgetsClass();
 
+    void startButton();
     void GraphRead();
     void addButton();
     void deleteButton();
@@ -40,7 +42,7 @@ public:
     void allPathsButton();
     void visualizeNodes(RoadMap* map);
     void visualizeEdges(RoadMap* map);
-
+    
     Ui::QtWidgetsClassClass ui;
     QGraphicsScene* scene;
     QGraphicsView* view;
@@ -49,22 +51,29 @@ public:
 public slots:
 
     void slotAdd() {
-        QString src = ui.textEdit->toPlainText();
-        QString des = ui.textEdit_3->toPlainText();
+        QString src = ui.comboBox->currentText();
+        QString des = ui.comboBox_2->currentText();
         QString method = ui.textEdit_2->toPlainText();
         QString price = ui.textEdit_4->toPlainText();
-        map->addTransportation(src.toStdString(), des.toStdString(), method.toStdString(), price.toDouble());
-        GraphRead();
-        //ui.textEdit->clear();
-        //ui.textEdit_3->clear();
-        ui.textEdit_2->clear();
-        ui.textEdit_4->clear();
-        ui.stackedWidget_2->setCurrentWidget(ui.page_4);
+        if ( (src.toStdString() != "" && des.toStdString() != "" && method.toStdString() != "" && price.toStdString() != "") && (src!=des))
+        {
+            map->addTransportation(src.toStdString(), des.toStdString(), method.toStdString(), price.toDouble());
+            GraphRead();
+            //ui.textEdit->clear();
+            //ui.textEdit_3->clear();
+            ui.textEdit_2->clear();
+            ui.textEdit_4->clear();
+            ui.stackedWidget_2->setCurrentWidget(ui.page_4);
+        }
+        else
+        {
+            QMessageBox::information(nullptr, "Alert", "Incomplete information!");
+        }
     };
 
     void slotDelete() {
-        QString src = ui.textEdit_13->toPlainText();
-        QString des = ui.textEdit_14->toPlainText();
+        QString src = ui.comboBox_5->currentText();
+        QString des = ui.comboBox_6->currentText();
         QString method = ui.textEdit_15->toPlainText();
         map->deleteTransportation(src.toStdString(), des.toStdString(), method.toStdString());
         GraphRead();
@@ -75,8 +84,8 @@ public slots:
     };
 
     void slotUpdate() {
-        QString src = ui.textEdit_9->toPlainText();
-        QString des = ui.textEdit_10->toPlainText();
+        QString src = ui.comboBox_3->currentText();
+        QString des = ui.comboBox_4->currentText();
         QString method = ui.textEdit_11->toPlainText();
         QString nPrice = ui.textEdit_12->toPlainText();
         map->updateTransportation(src.toStdString(), des.toStdString(), method.toStdString(), nPrice.toDouble());
@@ -105,7 +114,7 @@ public slots:
 
         ui.textBrowser->clear(); 
 
-        QString src = ui.textEdit_16->toPlainText();
+        QString src = ui.comboBox_7->currentText();
         QString text = map->dfs(src.toStdString());
 
         ui.textBrowser->append(text); 
@@ -115,7 +124,7 @@ public slots:
 
         ui.textBrowser->clear(); 
 
-        QString src = ui.textEdit_16->toPlainText();
+        QString src = ui.comboBox_7->currentText();
         QString text = map->bfs(src.toStdString());
 
         ui.textBrowser->append(text); 
@@ -126,21 +135,21 @@ public slots:
 
         ui.textBrowser_2->clear(); 
 
-        QString src = ui.textEdit_17->toPlainText();
-        QString des = ui.textEdit_18->toPlainText();
+        QString src = ui.comboBox_8->currentText();
+        QString des = ui.comboBox_9->currentText();
         QString bud = ui.textEdit_19->toPlainText();
 
         QString text = map->outputofpaths(src.toStdString(), des.toStdString(), bud.toDouble());
 
-        ui.textEdit_17->clear();
-        ui.textEdit_18->clear();
+        //ui.textEdit_17->clear();
+        //ui.textEdit_18->clear();
         ui.textEdit_19->clear();
 
         ui.textBrowser_2->append(text); 
 
     };
 
-    void slotTransDisplay() {
+    /*void slotTransDisplay() {
 
         ui.textBrowser_3->clear();
         QString src = ui.textEdit_5->toPlainText();
@@ -149,7 +158,7 @@ public slots:
         QString text = map->DisplayEdges(src.toStdString(), des.toStdString());
 
         ui.textBrowser_3->append(text); 
-    }
+    }*/
 
 
 
