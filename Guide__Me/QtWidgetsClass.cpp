@@ -48,6 +48,7 @@ void QtWidgetsClass::traversButton()
 
 void QtWidgetsClass::returnButton()
 {
+
     ui.stackedWidget->setCurrentWidget(ui.page_2);
     ui.stackedWidget_2->setCurrentWidget(ui.page_3);
 }
@@ -100,42 +101,26 @@ void QtWidgetsClass::visualizeNodes(RoadMap* map) {
 }
 
 void QtWidgetsClass::visualizeEdges(RoadMap* map) {
-
-    for (const auto& pair : map->map) 
-    {
+    for (const auto& pair : map->map) {
         int x1 = coordinates[pair.first].first;
         int y1 = coordinates[pair.first].second;
 
-        for (const auto& transport : pair.second) 
-        {
-            if (!transport.second.empty())
-            {
+        for (const auto& transport : pair.second) {
+            if (!transport.second.empty()) {
                 int x2 = coordinates[transport.first].first;
                 int y2 = coordinates[transport.first].second;
-                QGraphicsLineItem* edge = scene->addLine(x1 + 20, y1, x2 + 20, y2);
 
+                // Create an Edge object and add it to the scene
+                Edge* edge = new Edge(x1 + 20, y1, x2 + 20, y2, QString::fromStdString(pair.first), QString::fromStdString(transport.first), map);
+                edge->setTextBrowser(ui.textBrowser_3);  // textBrowser_3 is a member variable of QtWidgetsClass
+                scene->addItem(edge);
+
+                // Setting initial pen properties
                 QPen pen = edge->pen();
                 pen.setColor(Qt::red);
-                pen.setWidth(5);                // Set line thickness 
+                pen.setWidth(5); // Set line thickness 
                 edge->setPen(pen);
-
-           /*     // Add weight text
-                int spaceX = 0;
-                for (auto trans : transport.second)
-                {
-                    string vehicle = trans.vehicle;
-                    int price = trans.price; // Assuming weight is stored in the second component of the pair
-                    QString text = QString::fromStdString(vehicle + " - " + std::to_string(price) + " , "); // Concatenate vehicle and price
-                    QGraphicsTextItem* weightText = scene->addText(text);
-                    qreal weightX = (x1+spaceX + x2) / 2; // Calculate midpoint x-coordinate
-                    qreal weightY = (y1 + y2) / 2; // Calculate midpoint y-coordinate
-                    weightText->setPos(weightX, weightY);
-                    spaceX += trans.vehicle.size()*30;
-                }
-           */
-
             }
-
         }
     }
 }
