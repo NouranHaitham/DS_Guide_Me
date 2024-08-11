@@ -18,8 +18,8 @@ Dahab - BeniSuef Microbus 200 Bus 315
     fstream file;
     file.open("Input.txt", ios::in);
 
-    int num; file >> num;
-    file.ignore();
+   // int num; file >> num;
+  //  file.ignore();
 
     string line;
 
@@ -91,7 +91,7 @@ RoadMap::~RoadMap()
     file.open("Input.txt", ios::out);
 
 
-    file << map.size() << endl;
+   // file << map.size() << endl;
 
     set<pair<string, string>> isPrinted;
 
@@ -499,14 +499,16 @@ QString RoadMap::outputofpaths(string src, string des, double t)
         QMessageBox::information(nullptr, "Paths", "There are no suitable paths to the target destination with your current budget! ┑(￣Д ￣)┍");
 
     QString text;
+    int cnt = 1;
 
     for (auto rout : routs) {
-        text.append(source).append(" ");
+        text.append(QString::number(cnt)+".").append(source).append(" ");
         for (auto r : rout.second)
         {
-            text.append("( ").append(r.second).append(" ) ").append(r.first).append(" ");
+            text.append("< ").append(r.second).append(" > ").append(r.first).append(" ");
         }
-        text.append(QString::number(rout.first)).append("\n"); // price
+        text.append(" Price: ").append(QString::number(rout.first)).append("\n"); // price
+        cnt++;
     }
     return text;
 }

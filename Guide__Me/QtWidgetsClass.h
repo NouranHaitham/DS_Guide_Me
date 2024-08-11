@@ -33,20 +33,22 @@ public:
     ~QtWidgetsClass();
 
     void startButton();
-    void GraphRead();
+    void GraphRead(int x1 = 0, int y1 = 0, int x2 = 0, int y2 = 0, bool mod = 0);
     void addButton();
     void deleteButton();
     void updateButton();
     void traversButton();
     void returnButton();
     void allPathsButton();
-    void visualizeNodes(RoadMap* map);
-    void visualizeEdges(RoadMap* map);
+    void visualizeNodes(RoadMap* map,bool mod);
+    void visualizeNodes(std::vector<string> cities);
+    void visualizeEdges(RoadMap* map, int x1, int y1, int x2, int y2, bool mod);
     
     Ui::QtWidgetsClassClass ui;
     QGraphicsScene* scene;
     QGraphicsView* view;
     std::unordered_map<std::string, std::pair<int, int>> coordinates;
+ 
 
 public slots:
 
@@ -54,7 +56,9 @@ public slots:
         QString src = ui.comboBox->currentText();
         QString des = ui.comboBox_2->currentText();
         QString method = ui.textEdit_2->toPlainText();
+        method.remove(" ");
         QString price = ui.textEdit_4->toPlainText();
+        price.remove(" ");
         if ( (src.toStdString() != "" && des.toStdString() != "" && method.toStdString() != "" && price.toStdString() != "") && (src!=des))
         {
             map->addTransportation(src.toStdString(), des.toStdString(), method.toStdString(), price.toDouble());
@@ -75,6 +79,7 @@ public slots:
         QString src = ui.comboBox_5->currentText();
         QString des = ui.comboBox_6->currentText();
         QString method = ui.textEdit_15->toPlainText();
+        method.remove(" ");
         map->deleteTransportation(src.toStdString(), des.toStdString(), method.toStdString());
         GraphRead();
         //ui.textEdit_13->clear();
@@ -87,7 +92,9 @@ public slots:
         QString src = ui.comboBox_3->currentText();
         QString des = ui.comboBox_4->currentText();
         QString method = ui.textEdit_11->toPlainText();
+        method.remove(" ");
         QString nPrice = ui.textEdit_12->toPlainText();
+        nPrice.remove(" ");
         map->updateTransportation(src.toStdString(), des.toStdString(), method.toStdString(), nPrice.toDouble());
         GraphRead();
         //ui.textEdit_9->clear();
@@ -112,22 +119,44 @@ public slots:
 
     void slotDFS() {
 
-        ui.textBrowser->clear(); 
+       // ui.textBrowser->clear(); 
 
         QString src = ui.comboBox_7->currentText();
         QString text = map->dfs(src.toStdString());
 
-        ui.textBrowser->append(text); 
+        QStringList cityList = text.split("\n");
+
+        // Convert the QStringList to a std::vector<std::string>
+        std::vector<std::string> cities;
+        for (const QString& city : cityList) {
+            cities.push_back(city.toStdString()); // Convert each QString to std::string
+        }
+
+        visualizeNodes(cities);
+
+       // ui.textBrowser->append(text); 
     };
 
     void slotBFS() {
 
-        ui.textBrowser->clear(); 
+       // ui.textBrowser->clear(); 
 
         QString src = ui.comboBox_7->currentText();
         QString text = map->bfs(src.toStdString());
 
-        ui.textBrowser->append(text); 
+
+        QStringList cityList = text.split("\n");
+
+        // Convert the QStringList to a std::vector<std::string>
+        std::vector<std::string> cities;
+        for (const QString& city : cityList) {
+            cities.push_back(city.toStdString()); // Convert each QString to std::string
+        }
+
+        visualizeNodes(cities);
+
+
+     //   ui.textBrowser->append(text); 
 
     };
 
@@ -138,6 +167,7 @@ public slots:
         QString src = ui.comboBox_8->currentText();
         QString des = ui.comboBox_9->currentText();
         QString bud = ui.textEdit_19->toPlainText();
+        bud.remove(" ");
 
         QString text = map->outputofpaths(src.toStdString(), des.toStdString(), bud.toDouble());
 
@@ -173,21 +203,37 @@ public:
         setFlag(QGraphicsItem::ItemIsSelectable);
         setAcceptHoverEvents(true); // Optional: for hover events if needed
         setPen(QPen(Qt::red, 5)); // Default color and thickness
+
+        x1_ = x1;
+        x2_ = x2;
+        y1_ = y1;
+        y2_ = y2;
+
     }
 
     void setTextBrowser(QTextBrowser* textBrowser) {
         textBrowser_ = textBrowser;
+    }
+    void setwidget(QtWidgetsClass* widg) {
+        wid = widg;
     }
 
 protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* event) override {
         if (event->button() == Qt::LeftButton) {
             // Change edge color to blue when clicked
+
+            wid->GraphRead(x1_, y1_, x2_,y2_,1);
+            
+            wid->scene->addItem(this);
             QPen pen = this->pen();
             pen.setColor(Qt::blue);
             setPen(pen);
 
-            if (textBrowser_) {
+            wid->visualizeNodes(roadMap_, 0);
+            
+             
+             if (textBrowser_) {
                 QString edgeData;
                 std::string src = source_.toStdString();
                 std::string des = destination_.toStdString();
@@ -212,10 +258,13 @@ protected:
     }
 
 
-
 private:
+
+    QtWidgetsClass* wid;
     QString source_;
     QString destination_;
     RoadMap* roadMap_;
     QTextBrowser* textBrowser_;
+    int x1_, y1_, x2_, y2_;
+
 };

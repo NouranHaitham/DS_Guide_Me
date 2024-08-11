@@ -1,4 +1,5 @@
 #include "QtWidgetsClass.h"
+#include <QTimer>
 
 QtWidgetsClass::QtWidgetsClass(QWidget* parent)
     : QMainWindow(parent)
@@ -21,14 +22,16 @@ void QtWidgetsClass::startButton()
         }
     }
 }
-void QtWidgetsClass::GraphRead() {
+void QtWidgetsClass::GraphRead(int x1, int y1, int x2, int y2,bool mod)
+{
 
     scene = new QGraphicsScene();
     ui.graphicsView->setScene(scene);
 
     // Visualize graph
-    visualizeNodes(map);
-    visualizeEdges(map);
+    visualizeNodes(map,1);
+    visualizeEdges(map,x1,y1,x2,y2,mod);
+    visualizeNodes(map, 0);
 
     //go to 2nd page (2nd page name is from the scene builder)
     ui.stackedWidget->setCurrentWidget(ui.page_2);
@@ -79,7 +82,7 @@ void QtWidgetsClass::allPathsButton()
 }
 
 
-void QtWidgetsClass::visualizeNodes(RoadMap* map) {
+void QtWidgetsClass::visualizeNodes(RoadMap* map,bool mod) {
 
     int x = 0, y = 500;
     int i = 0;
@@ -100,7 +103,8 @@ void QtWidgetsClass::visualizeNodes(RoadMap* map) {
         // Get the width and height of the text
         qreal textWidth = textRect.width();
 
-        coordinates.insert({ pair.first, { x,y + 20 } });
+        if(mod)
+           coordinates.insert({ pair.first, { x,y + 20 } });
 
         i++;
 
@@ -121,7 +125,43 @@ void QtWidgetsClass::visualizeNodes(RoadMap* map) {
     }
 }
 
-void QtWidgetsClass::visualizeEdges(RoadMap* map) {
+void QtWidgetsClass::visualizeNodes(std::vector<string> cities)
+{
+  
+    //QTimer* timer = new QTimer();
+   
+
+    //for (int i = 0; i < cities.size(); i++) {
+    //    QGraphicsEllipseItem* node = scene->addEllipse(coordinates[cities[i]].first, coordinates[cities[i]].second, 40, 40);
+    //    node->setBrush(Qt::red);
+    //    timer->start(500);
+
+    //}
+
+    QTimer* timer = new QTimer(this); // Make sure the timer is tied to the parent to manage its lifecycle
+
+    // Create a lambda function that will be called each time the timer fires
+    int i = 0; // Start index
+    connect(timer, &QTimer::timeout, this, [=]() mutable {
+        if (i < cities.size()-1) {
+            QGraphicsEllipseItem* node = scene->addEllipse(coordinates[cities[i]].first, coordinates[cities[i]].second-20, 40, 40);
+            node->setBrush(Qt::blue);
+            i++; // Move to the next city
+        }
+        else {
+            timer->stop(); // Stop the timer when all cities have been processed
+            visualizeNodes(map, 0);
+        }
+        });
+
+    timer->start(1000); // Start the timer with a 500 ms interval
+ 
+}
+
+
+void QtWidgetsClass::visualizeEdges(RoadMap* map, int x1_, int y1_, int x2_, int y2_, bool mod) {
+
+
     for (const auto& pair : map->map) {
         int x1 = coordinates[pair.first].first;
         int y1 = coordinates[pair.first].second;
@@ -132,7 +172,12 @@ void QtWidgetsClass::visualizeEdges(RoadMap* map) {
                 int y2 = coordinates[transport.first].second;
 
                 // Create an Edge object and add it to the scene
+
+                if (mod && (x1_ == x1 + 20 && y1_ == y1 && x2_ == x2 + 20 && y2_ == y2))
+                    continue;
+
                 Edge* edge = new Edge(x1 + 20, y1, x2 + 20, y2, QString::fromStdString(pair.first), QString::fromStdString(transport.first), map);
+                edge->setwidget(this);
                 edge->setTextBrowser(ui.textBrowser_3);  // textBrowser_3 is a member variable of QtWidgetsClass
                 scene->addItem(edge);
 
@@ -141,7 +186,10 @@ void QtWidgetsClass::visualizeEdges(RoadMap* map) {
                 pen.setColor(Qt::red);
                 pen.setWidth(5); // Set line thickness 
                 edge->setPen(pen);
+
             }
         }
+
+
     }
 }
