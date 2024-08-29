@@ -32,6 +32,7 @@ public:
     QtWidgetsClass(QWidget* parent = nullptr);
     ~QtWidgetsClass();
 
+    void setCoverPhoto();
     void startButton();
     void GraphRead(int x1 = 0, int y1 = 0, int x2 = 0, int y2 = 0, bool mod = 0);
     void addButton();
@@ -43,7 +44,7 @@ public:
     void visualizeNodes(RoadMap* map,bool mod);
     void visualizeNodes(std::vector<string> cities);
     void visualizeEdges(RoadMap* map, int x1, int y1, int x2, int y2, bool mod);
-    
+
     Ui::QtWidgetsClassClass ui;
     QGraphicsScene* scene;
     QGraphicsView* view;

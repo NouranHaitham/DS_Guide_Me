@@ -12,6 +12,54 @@ QtWidgetsClass::~QtWidgetsClass()
     map->~RoadMap();
 
 }
+
+void QtWidgetsClass::setCoverPhoto() {
+    // Set the path relative to the executable or project folder
+    QString imagePath = "../icons/newBG.png";
+    QPixmap coverImage(imagePath);
+
+    if (!coverImage.isNull()) {
+        // Set the pixmap to the label
+        ui.label_3->setPixmap(coverImage);
+        ui.label_3->setScaledContents(true); // Scales the image to fit the label
+    }
+    else {
+        qDebug() << "Failed to load the image from path:" << imagePath;
+    }
+
+    // List of button-icon pairs (assuming the buttons are named accordingly in your UI)
+    struct ButtonIcon {
+        QPushButton* button;
+        QString iconPath;
+    };
+
+    std::vector<ButtonIcon> buttonIcons = {
+        {ui.pushButton_3, "../icons/add.png"},
+        {ui.pushButton_2, "../icons/update.png"},
+        {ui.pushButton_4, "../icons/delete.png"},
+        {ui.pushButton_5, "../icons/traverse.png"},
+        {ui.pushButton_15, "../icons/allpaths.png"},
+        {ui.pushButton_18, "../icons/connect.png"},
+        {ui.pushButton_20, "../icons/complete.png"},
+        {ui.pushButton_13, "../icons/dfs.png"},
+        {ui.pushButton_14, "../icons/bfs.png"}
+        // Add more buttons and corresponding icons here
+    };
+
+    // Iterate through the buttons and set their icons
+    for (const auto& buttonIcon : buttonIcons) {
+        QPixmap iconPixmap(buttonIcon.iconPath);
+        if (!iconPixmap.isNull()) {
+            QIcon icon(iconPixmap); // Renamed to avoid conflict
+            buttonIcon.button->setIcon(icon);
+            buttonIcon.button->setIconSize(QSize(20, 20)); // Adjust icon size to button size
+        }
+        else {
+            qDebug() << "Failed to load the icon from path:" << buttonIcon.iconPath;
+        }
+    }
+}
+
 void QtWidgetsClass::startButton()
 {
     GraphRead();
@@ -21,6 +69,9 @@ void QtWidgetsClass::startButton()
             comboBox->addItem(QString::fromStdString(pair.first));
         }
     }
+    //go to 2nd page (2nd page name is from the scene builder)
+    ui.stackedWidget->setCurrentWidget(ui.page_2);
+    ui.stackedWidget_2->setCurrentWidget(ui.page_3);
 }
 void QtWidgetsClass::GraphRead(int x1, int y1, int x2, int y2,bool mod)
 {
@@ -32,35 +83,43 @@ void QtWidgetsClass::GraphRead(int x1, int y1, int x2, int y2,bool mod)
     visualizeNodes(map,1);
     visualizeEdges(map,x1,y1,x2,y2,mod);
     visualizeNodes(map, 0);
-
-    //go to 2nd page (2nd page name is from the scene builder)
-    ui.stackedWidget->setCurrentWidget(ui.page_2);
-    ui.stackedWidget_2->setCurrentWidget(ui.page_3);
+    ui.textBrowser_3->clear();
 }
 
 void QtWidgetsClass::addButton()
 {
+    visualizeEdges(map,0,0,0,0,1);
+    ui.textBrowser_3->clear();
     ui.stackedWidget_2->setCurrentWidget(ui.page_4);
 }
 
 void QtWidgetsClass::updateButton()
 {
+    visualizeEdges(map, 0, 0, 0, 0, 1);
+    ui.textBrowser_3->clear();
     ui.stackedWidget_2->setCurrentWidget(ui.page_5);
 }
 
 void QtWidgetsClass::deleteButton()
 {
+    visualizeEdges(map, 0, 0, 0, 0, 1);
+    ui.textBrowser_3->clear();
     ui.stackedWidget_2->setCurrentWidget(ui.page_6);
 }
 
 
 void QtWidgetsClass::traversButton()
 {
+    visualizeEdges(map, 0, 0, 0, 0, 1);
+    ui.textBrowser_3->clear();
     ui.stackedWidget_2->setCurrentWidget(ui.page_7);
 }
 
 void QtWidgetsClass::returnButton()
 {
+    visualizeEdges(map, 0, 0, 0, 0, 1);
+    ui.textBrowser_3->clear();
+
     vector<QComboBox*> comboBoxes = { ui.comboBox, ui.comboBox_2, ui.comboBox_3, ui.comboBox_4, ui.comboBox_5, ui.comboBox_6, ui.comboBox_7, ui.comboBox_8, ui.comboBox_9 };
 
     for (QComboBox* comboBox : comboBoxes) {

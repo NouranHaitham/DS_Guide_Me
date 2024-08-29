@@ -7,6 +7,10 @@ int main(int argc, char* argv[])
     //
     QApplication app(argc, argv);
     QtWidgetsClass w;
+    w.setWindowIcon(QIcon("../icons/app-icon"));
+    w.setCoverPhoto();
+
+
     QObject::connect(w.ui.pushButton, &QPushButton::clicked, &w, &QtWidgetsClass::startButton);
     QObject::connect(w.ui.pushButton_3, &QPushButton::clicked, &w, &QtWidgetsClass::addButton);
     QObject::connect(w.ui.pushButton_2, &QPushButton::clicked, &w, &QtWidgetsClass::updateButton);
