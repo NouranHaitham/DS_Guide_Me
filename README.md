@@ -1,8 +1,30 @@
 # 🚀 GUIDE ME: Your Travel Companion
 
-GUIDE ME is a C++ application designed to help travelers navigate a country efficiently while staying within budget. This tool enables users to explore various transportation options between cities, ensuring a cost-effective journey. 
+*GUIDE ME* is a C++ application designed to help travelers navigate a country efficiently while staying within budget. This tool enables users to explore various transportation options between cities, ensuring a cost-effective journey. 
+
+<div align="center">
+  <img src="https://imgur.com/zs33PGc.png" width="600">
+</div>
+
+<div align="center">
+  <a href="https://www.qt.io/">
+    <img src="https://img.shields.io/badge/Made%20with-QT-E34F26" alt="Made with Qt">
+  </a>
+  <a href="https://cplusplus.com/">
+    <img src="https://img.shields.io/badge/Made%20with-C++-00599C" alt="Made with C++">
+  </a>
+  <a href="https://developer.mozilla.org/en-US/docs/Web/CSS">
+    <img src="https://img.shields.io/badge/Made%20with-CSS-1572B6" alt="Made with CSS">
+  </a>
+</div>
 
 ## 🌟 Core Features
+
+
+<div align="center">
+  <img src="https://imgur.com/iDGBb4E.png" width="600">
+</div>
+
 
 - **Graph Traversal:**
   - Traverse the country’s transportation graph using:
@@ -35,6 +57,10 @@ GUIDE ME is a C++ application designed to help travelers navigate a country effi
 
 - **GUI:**
   - For an enhanced user experience, a graphical user interface can be integrated to make the application more user-friendly using QT.
+
+## 🌐 Live Demo
+
+You can check out the live version of Algolizer at [Live Demo](https://drive.google.com/file/d/1HXbDa83BmnBvwheaVzc6XIll0v5k5t0l/view?usp=sharing).
 
 ## 🚧 Getting Started
 
